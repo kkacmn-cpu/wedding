@@ -1541,9 +1541,48 @@ function replayOpening(){
 
 /* 업로드 */
 function readImg(file,cb){const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(file);}
-function upMain(i){if(i.files[0])readImg(i.files[0],d=>{ST.mainPhoto=d;renderIV();});}
-function upThumb(i){if(i.files[0])readImg(i.files[0],d=>{ST.thumbPhoto=d;renderIV();});}
-function upGal(i){[...i.files].slice(0,40).forEach(f=>readImg(f,d=>{ST.gallery.push(d);renderGal();renderIV();}));}
+
+/* Supabase Storage에 실제 업로드 */
+async function uploadToStorage(file,path){
+  const{data,error}=await sb.storage.from('wedding-photos').upload(path,file,{upsert:true,contentType:file.type});
+  if(error){console.error('업로드 실패:',error);return null;}
+  const{data:{publicUrl}}=sb.storage.from('wedding-photos').getPublicUrl(path);
+  return publicUrl;
+}
+
+async function upMain(i){
+  if(!i.files[0])return;
+  const file=i.files[0];
+  readImg(file,d=>{ST.mainPhoto=d;renderIV();}); /* 미리보기 먼저 */
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session)return; /* 로그인 안됐으면 미리보기만 */
+  const path=`${session.user.id}/main_${Date.now()}.${file.name.split('.').pop()}`;
+  const url=await uploadToStorage(file,path);
+  if(url)ST.mainPhotoUrl=url;
+}
+
+async function upThumb(i){
+  if(!i.files[0])return;
+  const file=i.files[0];
+  readImg(file,d=>{ST.thumbPhoto=d;renderIV();});
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session)return;
+  const path=`${session.user.id}/thumb_${Date.now()}.${file.name.split('.').pop()}`;
+  const url=await uploadToStorage(file,path);
+  if(url)ST.thumbPhotoUrl=url;
+}
+
+async function upGal(i){
+  const files=[...i.files].slice(0,40);
+  files.forEach(f=>readImg(f,d=>{ST.gallery.push(d);renderGal();renderIV();}));
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session)return;
+  const urls=await Promise.all(files.map(async(f,idx)=>{
+    const path=`${session.user.id}/gal_${Date.now()}_${idx}.${f.name.split('.').pop()}`;
+    return uploadToStorage(f,path);
+  }));
+  ST.galleryUrls=[...(ST.galleryUrls||[]),...urls.filter(Boolean)];
+}
 function renderGal(){V('galGrid').innerHTML=ST.gallery.map((s,i)=>`<div class="pthumb"><img src="${s}"/><div class="rm" onclick="rmGal(${i})">×</div></div>`).join('');}
 function rmGal(i){ST.gallery.splice(i,1);renderGal();renderIV();}
 
@@ -1784,7 +1823,9 @@ async function saveCard(){
       dday:chk('o_dday'),gallery:chk('o_gallery'),
       rsvp:chk('o_rsvp'),guest:chk('o_guest'),
       account:chk('o_account'),music:chk('o_music')
-    }
+    },
+    main_photo_url:ST.mainPhotoUrl||null,
+    gallery_urls:ST.galleryUrls||[]
   };
 
   const{error}=await sb.from('cards').insert(cardData);
