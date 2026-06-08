@@ -1700,5 +1700,169 @@ function observeRv(){
 }
 observeRv();
 </script>
+
+<!-- ============ Supabase SDK ============ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/* ===== Supabase 설정 ===== */
+const SUPA_URL='https://jchohaqvaoytplinlylt.supabase.co';
+const SUPA_KEY='sb_publishable_pinNIcaU11HhbSz3TR__mQ_Ln4cJ79a';
+const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
+
+/* ===== 로그인 상태 UI ===== */
+async function initAuth(){
+  const{data:{session}}=await sb.auth.getSession();
+  renderAuthUI(session?.user||null);
+  sb.auth.onAuthStateChange((_,s)=>renderAuthUI(s?.user||null));
+}
+
+function renderAuthUI(user){
+  const bar=document.getElementById('authBar');
+  if(!bar)return;
+  if(user){
+    bar.innerHTML=`
+      <div class="auth-user">
+        <span>👤 ${user.email||'로그인됨'}</span>
+        <button onclick="goMyCards()" class="btn btn-ghost btn-sm">내 청첩장</button>
+        <button onclick="signOut()" class="btn btn-ghost btn-sm">로그아웃</button>
+      </div>`;
+  }else{
+    bar.innerHTML=`
+      <button onclick="signInGoogle()" class="btn btn-solid btn-sm">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        구글로 시작하기
+      </button>`;
+  }
+}
+
+async function signInGoogle(){
+  await sb.auth.signInWithOAuth({
+    provider:'google',
+    options:{redirectTo:window.location.href}
+  });
+}
+
+async function signOut(){
+  await sb.auth.signOut();
+  renderAuthUI(null);
+}
+
+/* ===== 청첩장 저장 ===== */
+async function saveCard(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session){alert('먼저 로그인해주세요!');signInGoogle();return;}
+
+  const user=session.user;
+  const g=val('f_groom')||'신랑',b=val('f_bride')||'신부';
+
+  /* 고유 slug 생성 (이름+랜덤4자리) */
+  const slug=`${g}-${b}-${Math.random().toString(36).substr(2,4)}`.replace(/\s+/g,'-');
+
+  const cardData={
+    user_id:user.id,
+    slug,
+    groom_name:g,
+    bride_name:b,
+    wedding_date:val('f_date')||null,
+    wedding_time:val('f_time')||null,
+    venue_name:val('f_venue')||null,
+    venue_hall:val('f_hall')||null,
+    venue_address:val('f_addr')||null,
+    message:val('f_msg')||null,
+    theme:ST.theme||'ivory',
+    font:val('f_font')||'serif',
+    opening:val('f_opening')||'fade',
+    groom_bank:val('f_gbank')||null,
+    groom_account:val('f_gacc')||null,
+    groom_holder:val('f_gholder')||null,
+    bride_bank:val('f_bbank')||null,
+    bride_account:val('f_bacc')||null,
+    bride_holder:val('f_bholder')||null,
+    lang2:val('f_lang2')||null,
+    options:{
+      dday:chk('o_dday'),gallery:chk('o_gallery'),
+      rsvp:chk('o_rsvp'),guest:chk('o_guest'),
+      account:chk('o_account'),music:chk('o_music')
+    }
+  };
+
+  const{error}=await sb.from('cards').insert(cardData);
+  if(error){
+    if(error.code==='23505'){
+      /* slug 중복이면 다시 시도 */
+      cardData.slug=slug+'-'+Math.random().toString(36).substr(2,3);
+      await sb.from('cards').insert(cardData);
+    }else{
+      alert('저장 실패: '+error.message);return;
+    }
+  }
+
+  /* 완성 URL 보여주기 */
+  const cardUrl=`${window.location.origin}/wedding/card.html?slug=${cardData.slug}`;
+  showSaveSuccess(cardUrl,cardData.slug);
+}
+
+function showSaveSuccess(url,slug){
+  const ov=document.getElementById('saveOv');
+  if(ov){
+    document.getElementById('saveUrl').textContent=url;
+    document.getElementById('saveUrlLink').href=url;
+    ov.classList.add('show');
+  }
+}
+
+function copySaveUrl(){
+  const url=document.getElementById('saveUrl').textContent;
+  navigator.clipboard.writeText(url).then(()=>{
+    const btn=document.querySelector('.save-copy-btn');
+    if(btn){const o=btn.textContent;btn.textContent='복사됨 ✓';setTimeout(()=>btn.textContent=o,1500);}
+  });
+}
+
+function goMyCards(){
+  alert('내 청첩장 관리 페이지는 다음 단계에서 만들어요! 😊');
+}
+
+/* ===== 발행 버튼을 저장으로 연결 ===== */
+function openPublish(){saveCard();}
+
+/* ===== 초기화 ===== */
+initAuth();
+</script>
+
+<!-- ============ 저장 완료 모달 ============ -->
+<style>
+/* 인증 바 */
+#authBar{position:fixed;bottom:24px;right:24px;z-index:900;}
+.auth-user{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:10px 18px;box-shadow:var(--sh-md);font-size:13px;color:var(--brown);}
+/* 저장 완료 모달 */
+.save-ov{position:fixed;inset:0;background:rgba(20,16,12,.62);backdrop-filter:blur(6px);z-index:1100;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .35s;}
+.save-ov.show{opacity:1;pointer-events:all;}
+.save-modal{background:var(--white);border-radius:var(--r-lg);padding:44px 38px;max-width:460px;width:100%;text-align:center;box-shadow:var(--sh-lg);position:relative;}
+.save-modal h3{font-family:var(--serif);font-size:24px;color:var(--brown);margin-bottom:8px;}
+.save-modal p{font-size:14px;color:var(--brown-mute);margin-bottom:20px;line-height:1.8;}
+.save-url-box{background:var(--ivory-2);border:1px solid var(--line);border-radius:10px;padding:13px 16px;font-size:12px;color:var(--gold-deep);margin-bottom:20px;word-break:break-all;text-align:left;}
+.save-modal-btns{display:flex;gap:10px;}
+.save-modal-btns .btn{flex:1;}
+.save-x{position:absolute;top:16px;right:20px;font-size:22px;color:var(--brown-mute);cursor:pointer;}
+</style>
+
+<div id="authBar"></div>
+
+<div class="save-ov" id="saveOv">
+  <div class="save-modal">
+    <span class="save-x" onclick="document.getElementById('saveOv').classList.remove('show')">×</span>
+    <div style="font-size:48px;margin-bottom:14px;">🎉</div>
+    <h3>청첩장이 저장됐어요!</h3>
+    <p>아래 링크로 하객들에게 공유하세요.<br>언제든지 수정할 수 있어요.</p>
+    <div class="save-url-box" id="saveUrl"></div>
+    <div class="save-modal-btns">
+      <button class="btn btn-ghost save-copy-btn" onclick="copySaveUrl()">🔗 링크 복사</button>
+      <a class="btn btn-gold" id="saveUrlLink" href="#" target="_blank">청첩장 보기 →</a>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
