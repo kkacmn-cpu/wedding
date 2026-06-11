@@ -218,6 +218,7 @@ input,select,textarea{font-family:inherit;}
 .scr::-webkit-scrollbar{display:none;}
 .prev-hint{position:absolute;bottom:18px;font-size:11px;color:var(--brown-mute);z-index:2;}
 .fab{display:none;position:fixed;bottom:20px;right:16px;z-index:80;padding:13px 20px;border-radius:999px;background:var(--brown);color:var(--ivory);font-size:13px;align-items:center;gap:7px;box-shadow:var(--sh-lg);}
+.mobile-actionbar{display:none;}
 .prev-close{display:none;position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(58,47,38,.5);color:#fff;align-items:center;justify-content:center;font-size:18px;z-index:5;}
 
 /* ===== 청첩장 내부 CSS ===== */
@@ -466,23 +467,113 @@ input,select,textarea{font-family:inherit;}
 .order-info{background:var(--ivory-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--brown-mute);text-align:left;line-height:1.8;margin-bottom:14px;}
 
 /* ===== 반응형 ===== */
+/* ════════════════════════════════════════════════════════
+   모바일 제작 페이지 재설계 (≤768px)
+   PC 2단 레이아웃 → 모바일 단일 흐름 + 하단 고정 액션바
+   ════════════════════════════════════════════════════════ */
 @media(max-width:1024px){
   .layout{grid-template-columns:1fr;}
   .preview{display:none;}
-  .preview.show{display:flex;position:fixed;inset:calc(var(--topbar-h) + var(--stepbar-h)) 0 0 0;height:auto;z-index:95;}
+  .preview.show{display:flex;position:fixed;inset:0;height:auto;z-index:200;padding-top:0;}
   .prev-close{display:flex;}
-  .fab{display:flex;}
 }
-@media(max-width:560px){
-  :root{--topbar-h:54px;--stepbar-h:54px;}
+
+@media(max-width:768px){
+  /* ── 상단바: 컴팩트하게 ── */
+  :root{--topbar-h:50px;--stepbar-h:44px;}
   .topbar{padding:0 14px;}
+  .tb-back{font-size:14px;padding:6px 8px;}
   .tb-brand{display:none;}
-  .work{padding:28px 18px 100px;}
-  .sec{padding:36px 0;}
-  .tpl-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .frow{grid-template-columns:1fr;}
-  .cover-picker{grid-template-columns:1fr 1fr;}
-  .fi,.fs,.ft{font-size:16px;padding:13px 14px;}
+  .tb-right{gap:8px;}
+  .save-state{font-size:11px;}
+  /* 상단 발행 버튼은 숨기고 하단 고정바로 이동 */
+  .topbar #publishBtn{display:none;}
+
+  /* ── 단계바: 작고 간결한 가로 스크롤 칩 ── */
+  .stepbar{padding:0 12px;gap:6px;height:var(--stepbar-h);-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+  .sdot{padding:5px 12px;font-size:12.5px;gap:6px;scroll-snap-align:start;background:var(--white);border:1px solid var(--line-soft);}
+  .sdot.on{background:var(--gold-wash);border-color:var(--gold-pale);}
+  .sdot .sn{width:18px;height:18px;font-size:10px;}
+
+  /* ── 작업 영역: 단일 컬럼, 하단 액션바 공간 확보 ── */
+  .layout{display:block;height:auto;padding-top:calc(var(--topbar-h) + var(--stepbar-h));overflow-x:hidden;}
+  .work{overflow:visible;overflow-x:hidden;height:auto;max-width:100%;padding:22px 16px calc(72px + env(safe-area-inset-bottom,0px));}
+  .sec{max-width:100%;padding:30px 0;}
+  .sec:first-child{padding-top:8px;}
+  .sec-eyebrow{font-size:11px;letter-spacing:2px;margin-bottom:8px;}
+  .sec-title{font-size:23px;line-height:1.32;margin-bottom:8px;word-break:keep-all;}
+  .sec-desc{font-size:13.5px;line-height:1.7;margin-bottom:20px;word-break:keep-all;}
+
+  /* ── 템플릿 카드: 크고 시원하게 (1열 와이드) ── */
+  .tpl-grid{grid-template-columns:1fr;gap:14px;margin-bottom:24px;}
+  .tpl-card{border-radius:18px;}
+  .tpl-prev{height:172px;}
+  .tpl-name{font-size:15px;}
+  .tpl-pick{font-size:12px;padding:6px 14px;}
+
+  /* ── 폰트 카드: 1열, 샘플 크게 ── */
+  .font-grid{grid-template-columns:1fr;gap:10px;}
+  .font-card{padding:18px 18px;}
+  .fc-sample{font-size:24px;}
+
+  /* ── 커버/레이아웃 선택 ── */
+  .cover-picker{grid-template-columns:1fr 1fr;gap:10px;}
+  .layout-picker{grid-template-columns:repeat(3,1fr);gap:8px;}
+
+  /* ── 입력폼: 짧고 편하게 ── */
+  .fld{margin-bottom:15px;}
+  .fld-label{font-size:13px;margin-bottom:6px;}
+  .fi,.fs,.ft{font-size:16px;padding:12px 14px;border-radius:11px;}  /* 16px=iOS 자동확대 방지 */
+  .ft{min-height:88px;}
+  .frow{grid-template-columns:1fr;gap:0;}
+  .fsub{margin:20px 0 12px;font-size:14px;}
+
+  /* 입력 요소 폭 안전 (원인측 직접 제어) */
+  .fi,.fs,.ft,input,textarea,select{width:100%;max-width:100%;}
+  img,svg,canvas{max-width:100%;height:auto;}
+
+  /* finish-card 여백 정리 */
+  .finish-card{margin-top:24px;padding:28px 20px;}
+
+  /* ── 하단 고정 액션바: 미리보기 + 발행 ── */
+  .mobile-actionbar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:120;
+    gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));
+    background:rgba(252,249,244,.97);backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);box-shadow:0 -4px 20px rgba(58,47,38,.10);
+  }
+  .mobile-actionbar .btn{flex:1;justify-content:center;padding:14px;font-size:15px;border-radius:12px;}
+  .mab-preview{background:var(--white);border:1.5px solid var(--gold-pale);color:var(--gold-deep);}
+  .mab-publish{flex:1.3 !important;}
+  /* 기존 fab 숨김 (액션바로 대체) */
+  .fab{display:none !important;}
+
+  /* ── 미리보기 풀스크린 오버레이 ── */
+  .preview.show{background:linear-gradient(160deg,#efe6d8,#e6d9c5);padding:0;}
+  .preview.show .phone{margin:auto;width:min(320px,86vw);}
+  .preview.show .scr{height:min(620px,76vh);}
+  .prev-close{width:40px;height:40px;top:calc(14px + env(safe-area-inset-top,0px));right:16px;background:rgba(58,47,38,.55);z-index:210;}
+  .prev-label{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));left:20px;z-index:210;}
+  .prev-hint{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;z-index:210;}
+
+  /* 주문 인증/발행 완료 모달 */
+  .modal{padding:30px 22px;max-width:calc(100vw - 28px);}
+  .modal-btns{flex-direction:column;}
+}
+
+/* 초소형 (≤390px) */
+@media(max-width:390px){
+  .work{padding:20px 14px calc(72px + env(safe-area-inset-bottom,0px));}
+  .tpl-prev{height:158px;}
+  .cover-picker{grid-template-columns:1fr;}
+  .fc-sample{font-size:22px;}
+}
+
+/* 극소형 (≤360px) */
+@media(max-width:360px){
+  .sec-title{font-size:21px;}
+  .tpl-prev{height:148px;}
+  .layout-picker{gap:6px;}
 }
 </style>
 </head>
@@ -677,8 +768,11 @@ input,select,textarea{font-family:inherit;}
   </div>
 </div>
 
-<!-- 플로팅 버튼 (모바일) -->
-<button class="fab" onclick="togglePreview()">📱 미리보기</button>
+<!-- 모바일 하단 고정 액션바 (미리보기 + 발행) -->
+<div class="mobile-actionbar">
+  <button class="btn mab-preview" onclick="togglePreview()">📱 미리보기</button>
+  <button class="btn btn-gold mab-publish" onclick="publish()">발행하기 →</button>
+</div>
 
 <!-- 발행 완료 모달 -->
 <div class="ov" id="pubOv">
