@@ -472,13 +472,18 @@ input,select,textarea{font-family:inherit;}
    PC 2단 레이아웃 → 모바일 단일 흐름 + 하단 고정 액션바
    ════════════════════════════════════════════════════════ */
 @media(max-width:1024px){
-  .layout{grid-template-columns:1fr;}
+  /* ★ 단일 컬럼이 되는 시점부터 페이지 전체 스크롤로 전환 ── */
+  html,body{height:auto;min-height:100%;overflow:visible;overflow-x:hidden;}
+  .layout{grid-template-columns:1fr;display:block;height:auto;padding-top:calc(var(--topbar-h) + var(--stepbar-h));}
+  .work{overflow:visible;height:auto;}
   .preview{display:none;}
   .preview.show{display:flex;position:fixed;inset:0;height:auto;z-index:200;padding-top:0;}
   .prev-close{display:flex;}
 }
 
 @media(max-width:768px){
+  /* 스크롤은 위 1024px 블록에서 이미 페이지 전체로 전환됨 */
+
   /* ── 상단바: 컴팩트하게 ── */
   :root{--topbar-h:50px;--stepbar-h:44px;}
   .topbar{padding:0 14px;}
@@ -1350,6 +1355,8 @@ function renderIV(playOp){
   const calDow=_calValid?_calDays[_calObj.getDay()]:'SAT';
   const msg=esc(val('f_msg')||'서로 마주보며 다져온 사랑을\n이제 함께 한 곳을 바라보며 걸어가려 합니다.');
   const msg2=esc(val('f_msg2')||'');
+  const gParent=esc(val('f_gparent')||'');
+  const bParent=esc(val('f_bparent')||'');
   const venueN=esc(val('f_venue')||'예식장');
   const venueH=esc(val('f_hall')||'');
   const venueA=esc(val('f_addr')||'');
@@ -1483,6 +1490,15 @@ function renderIV(playOp){
     <div class="iv-msg" style="white-space:pre-line;margin-top:10px;">${msg}
       ${lang2&&msg2?`<span class="sub-lang" style="display:block;margin-top:8px;font-style:italic;opacity:.6;">${msg2}</span>`:''}
     </div></div>`;
+
+  /* 혼주 (선택 입력 — 비어있으면 표시 안 함) */
+  if(gParent||bParent){
+    html+=`<div class="iv-sec"><div class="iv-sec-t">With Parents</div>
+      <div class="iv-parents" style="margin-top:10px;display:flex;flex-direction:column;gap:12px;text-align:center;">
+        ${gParent?`<div><div style="font-size:11px;letter-spacing:1px;color:var(--brown-mute);margin-bottom:3px;">신랑측 혼주</div><div style="font-size:14.5px;word-break:keep-all;line-height:1.6;">${gParent}</div></div>`:''}
+        ${bParent?`<div><div style="font-size:11px;letter-spacing:1px;color:var(--brown-mute);margin-bottom:3px;">신부측 혼주</div><div style="font-size:14.5px;word-break:keep-all;line-height:1.6;">${bParent}</div></div>`:''}
+      </div></div>`;
+  }
 
   /* ③ 날짜·장소 */
   html+=`<div class="iv-sec"><div class="iv-sec-t">Date &amp; Venue</div>
@@ -1643,7 +1659,9 @@ async function _proceedPublish(session){
       guest:chk('o_guest'),account:chk('o_account'),music:chk('o_music'),
       contact:chk('o_contact'),bgm_url:safeUrl(val('f_bgm_url'))||null,
       cover:ST.cover,gallery_layout:ST.galleryLayout,
-      order_gb:val('f_order')==='gb'
+      order_gb:val('f_order')==='gb',
+      groom_parents:val('f_gparent')||null,
+      bride_parents:val('f_bparent')||null
     },
     main_photo_url:safeUrl(ST.mainPhotoUrl)||null,
     gallery_urls:(ST.galleryUrls||[]).map(u=>safeUrl(u)).filter(Boolean)
@@ -1780,7 +1798,7 @@ async function recordView(slug){
 
 /* ===== 자동저장 ===== */
 const DRAFT_KEY='mr_draft_v2';
-const DRAFT_FIELDS=['f_groom','f_bride','f_order','f_date','f_time','f_venue','f_hall','f_addr','f_msg','f_font','f_opening','f_lang2','f_msg2','f_venue2','f_gbank','f_gacc','f_gholder','f_bbank','f_bacc','f_bholder','f_bgm_url'];
+const DRAFT_FIELDS=['f_groom','f_bride','f_order','f_date','f_time','f_venue','f_hall','f_addr','f_msg','f_font','f_opening','f_lang2','f_msg2','f_venue2','f_gbank','f_gacc','f_gholder','f_bbank','f_bacc','f_bholder','f_bgm_url','f_gparent','f_bparent'];
 const DRAFT_TGLS=['o_dday','o_gallery','o_rsvp','o_guest','o_account','o_music','o_contact'];
 function saveDraft(){
   if(editSlug)return;
@@ -1820,6 +1838,8 @@ async function loadForEdit(){
   set('f_venue2',data.venue_lang2);
   set('f_gbank',data.groom_bank);set('f_gacc',data.groom_account);set('f_gholder',data.groom_holder);set('f_bbank',data.bride_bank);set('f_bacc',data.bride_account);set('f_bholder',data.bride_holder);
   if(data.options?.bgm_url)set('f_bgm_url',data.options.bgm_url);
+  if(data.options?.groom_parents)set('f_gparent',data.options.groom_parents);
+  if(data.options?.bride_parents)set('f_bparent',data.options.bride_parents);
   ST.theme=data.theme||'signature';renderTemplates();
   renderFonts();
   ST.cover=data.options?.cover||'arch';renderCovers();

@@ -805,6 +805,8 @@ function renderCard(card){
   const venueA=esc(card.venue_address||'');
   const msg=esc(card.message||'');
   const msgL2=esc(card.message_lang2||'');
+  const gParent=esc(opts.groom_parents||'');
+  const bParent=esc(opts.bride_parents||'');
   const venueL2=esc(card.venue_lang2||'');
   const groomBank=esc(card.groom_bank||'');
   const groomHolder=esc(card.groom_holder||'');
@@ -841,6 +843,17 @@ function renderCard(card){
       <div class="iv-sec-t">Invitation</div>
       <div class="iv-msg" style="white-space:pre-line;margin-top:12px;">${msg}
         ${lang2&&msgL2?`<span class="sub-lang" style="display:block;margin-top:10px;font-style:italic;">${msgL2}</span>`:''}
+      </div>
+    </div>`;
+  }
+
+  /* ②-b 혼주 (선택 — 비어있으면 영역 숨김) */
+  if(gParent||bParent){
+    html+=`<div class="iv-sec">
+      <div class="iv-sec-t">With Parents</div>
+      <div class="iv-parents" style="margin-top:12px;display:flex;flex-direction:column;gap:14px;text-align:center;">
+        ${gParent?`<div><div style="font-size:11px;letter-spacing:1.5px;color:var(--brown-mute);margin-bottom:4px;">신랑측 혼주</div><div style="font-size:15px;word-break:keep-all;line-height:1.6;">${gParent}</div></div>`:''}
+        ${bParent?`<div><div style="font-size:11px;letter-spacing:1.5px;color:var(--brown-mute);margin-bottom:4px;">신부측 혼주</div><div style="font-size:15px;word-break:keep-all;line-height:1.6;">${bParent}</div></div>`:''}
       </div>
     </div>`;
   }
