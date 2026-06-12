@@ -1734,7 +1734,8 @@ async function _proceedPublish(session){
  *      https://kkacmn-cpu.github.io/wedding/mypage.html
  * ───────────────────────────────────────────────────────────────── */
 async function signInKakao(){
-  await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:location.href}});
+  /* scope 명시: 이메일 권한 제외 (모바일청첩장은 이메일 불필요, KOE205 방지) */
+  await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:location.href,scopes:'profile_nickname profile_image'}});
 }
 function copyUrl(){navigator.clipboard.writeText(V('pubUrl').textContent).then(()=>{const b=V('pubCopyBtn');b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='🔗 링크 복사',1500);});}
 

@@ -160,7 +160,7 @@ function fmtDate(d){if(!d)return'날짜 미정';const dt=new Date(d),dy=['일','
  * 3. Supabase > Authentication > URL Configuration > Redirect URLs에
  *    https://kkacmn-cpu.github.io/wedding/mypage.html 등록
  * ───────────────────────────────────────────────────────────────── */
-async function signInKakao(){await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:location.href}});}
+async function signInKakao(){await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:location.href,scopes:'profile_nickname profile_image'}});}
 async function signOut(){await sb.auth.signOut();location.reload();}
 
 /* 메인 */
