@@ -1693,7 +1693,7 @@ async function verifyOrder(){
   verifyBtn.textContent='확인 중...';verifyBtn.disabled=true;
 
   try{
-    const res=await fetch('http://64.176.230.217:3000/verify-order',{
+    const res=await fetch('https://weddingapi.duckdns.org/verify-order',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({buyerName,buyerPhone})
