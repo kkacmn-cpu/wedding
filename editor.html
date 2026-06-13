@@ -283,22 +283,28 @@ input,select,textarea{font-family:inherit;}
 .sub-lang{display:block;font-size:.8em;opacity:.6;font-family:var(--intl);}
 /* ===== 12종 템플릿 미리보기 CSS (card.html과 동일 디자인, 미리보기 축소판) ===== */
 /* SIGNATURE — 거의 풀스크린 사진 (미리보기) */
-.t-signature{background:#f7f3ec;color:#3a2f26;}
+.t-signature{background:#0c0a08;color:#3a2f26;}
 .t-signature .iv-cover{padding:0;}
-.t-signature .sig-hero{position:relative;width:100%;height:540px;overflow:hidden;}
+.t-signature .sig-hero{position:relative;width:100%;height:540px;overflow:hidden;background:#0c0a08;}
 .t-signature .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-.t-signature .sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,10,6,.34),rgba(15,10,6,.04) 22%,rgba(15,10,6,0) 46%,rgba(15,10,6,.2) 70%,rgba(15,10,6,.72));}
-.t-signature .sig-top{position:absolute;top:28px;left:0;right:0;text-align:center;}
-.t-signature .sig-label{font-family:var(--display);font-size:11px;letter-spacing:5px;color:rgba(255,255,255,.88);text-shadow:0 1px 12px rgba(0,0,0,.5);}
-.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 22px 44px;text-align:center;}
-.t-signature .sig-names{font-family:var(--display);font-size:36px;font-weight:300;letter-spacing:1px;color:#fff;line-height:1.18;text-shadow:0 2px 24px rgba(0,0,0,.5);}
-.t-signature .sig-names .iv-amp{font-style:italic;font-weight:300;display:block;font-size:20px;margin:4px 0;opacity:.85;}
-.t-signature .sig-meta{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:18px;}
-.t-signature .sig-date,.t-signature .sig-time{font-family:var(--display);font-size:12px;letter-spacing:3px;color:rgba(255,255,255,.92);text-shadow:0 1px 10px rgba(0,0,0,.5);}
-.t-signature .sig-sep{width:4px;height:4px;border:1px solid rgba(255,255,255,.7);transform:rotate(45deg);}
-.t-signature .sig-scroll{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:1px;height:28px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.6));overflow:hidden;}
-.t-signature .sig-scroll span{position:absolute;top:0;left:0;width:1px;height:10px;background:rgba(255,255,255,.95);animation:sigScroll 1.8s ease-in-out infinite;}
+.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;}
+.t-signature .sig-scrim{position:absolute;inset:0;background:
+  linear-gradient(to bottom,rgba(8,6,4,.42) 0%,rgba(8,6,4,.08) 16%,rgba(8,6,4,0) 40%,rgba(8,6,4,0) 56%,rgba(8,6,4,.45) 78%,rgba(8,6,4,.88) 100%),
+  radial-gradient(130% 90% at 50% 35%,transparent 60%,rgba(8,6,4,.4) 100%);}
+.t-signature .sig-hero::before,.t-signature .sig-hero::after{content:'';position:absolute;left:0;right:0;height:36px;z-index:3;pointer-events:none;}
+.t-signature .sig-hero::before{top:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),transparent);}
+.t-signature .sig-hero::after{bottom:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent);}
+.t-signature .sig-top{position:absolute;top:28px;left:0;right:0;text-align:center;z-index:4;}
+.t-signature .sig-label{font-family:var(--display);font-size:11px;letter-spacing:6px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
+.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 22px 40px;text-align:center;z-index:4;}
+.t-signature .sig-names{font-family:var(--display);font-size:32px;font-weight:300;letter-spacing:3px;color:#fff;line-height:1.1;text-shadow:0 2px 24px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.35);}
+.t-signature .sig-names .sig-dot{display:inline-block;margin:0 10px;font-size:21px;vertical-align:middle;opacity:.6;font-weight:300;}
+.t-signature .sig-meta{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:16px;}
+.t-signature .sig-meta::before,.t-signature .sig-meta::after{content:'';width:18px;height:1px;background:rgba(255,255,255,.4);}
+.t-signature .sig-date,.t-signature .sig-time{font-family:var(--display);font-size:10.5px;letter-spacing:3px;color:rgba(255,255,255,.78);text-shadow:0 1px 10px rgba(0,0,0,.55);}
+.t-signature .sig-sep{width:3px;height:3px;border:1px solid rgba(255,255,255,.5);transform:rotate(45deg);}
+.t-signature .sig-scroll{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:1px;height:26px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.5));overflow:hidden;z-index:4;}
+.t-signature .sig-scroll span{position:absolute;top:0;left:0;width:1px;height:10px;background:rgba(255,255,255,.9);animation:sigScroll 1.8s ease-in-out infinite;}
 @keyframes sigScroll{0%{transform:translateY(-10px);opacity:0;}40%{opacity:1;}100%{transform:translateY(28px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
 .t-signature .iv-sec-t{color:#9a7740;}
@@ -1495,7 +1501,7 @@ function renderIV(playOp){
         <div class="sig-scrim"></div>
         <div class="sig-top"><span class="sig-label">THE WEDDING OF</span></div>
         <div class="sig-overlay">
-          <div class="sig-names">${namesStacked}</div>
+          <div class="sig-names">${_ef}<span class="sig-dot">·</span>${_es}</div>
           <div class="sig-meta">
             <span class="sig-date">${dateStr||'2025. 10. 18'}</span>
             ${time?`<span class="sig-sep"></span><span class="sig-time">${time}</span>`:''}
