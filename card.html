@@ -183,19 +183,19 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 .sig-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:6px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
 /* 하단 고정 영역 — 이름이 얼굴을 침범하지 않도록 아래쪽에 안정 배치 */
 .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 32px 58px;text-align:center;z-index:4;}
-.sig-names{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;letter-spacing:1.5px;color:#fff;line-height:1.08;text-shadow:0 2px 36px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.35);}
-.sig-names .iv-amp{font-style:italic;font-weight:300;display:block;font-size:21px;margin:7px 0;opacity:.72;}
+.sig-names{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;letter-spacing:3px;color:#fff;line-height:1.1;text-shadow:0 2px 30px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.35);}
+.sig-names .sig-dot{display:inline-block;margin:0 12px;font-size:24px;vertical-align:middle;opacity:.6;font-weight:300;}
 /* 날짜: 가는 라인 사이에 자간 넓은 소형 세리프 — 잡지 캡션 느낌 */
-.sig-meta{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:22px;}
-.sig-meta::before,.sig-meta::after{content:'';width:22px;height:1px;background:rgba(255,255,255,.45);}
-.sig-date{font-family:'Cormorant Garamond',serif;font-size:12.5px;letter-spacing:4px;color:rgba(255,255,255,.86);text-shadow:0 1px 12px rgba(0,0,0,.55);}
-.sig-sep{width:4px;height:4px;border:1px solid rgba(255,255,255,.55);transform:rotate(45deg);}
-.sig-time{font-family:'Cormorant Garamond',serif;font-size:12.5px;letter-spacing:4px;color:rgba(255,255,255,.86);text-shadow:0 1px 12px rgba(0,0,0,.55);}
+.sig-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px;}
+.sig-meta::before,.sig-meta::after{content:'';width:20px;height:1px;background:rgba(255,255,255,.4);}
+.sig-date{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
+.sig-sep{width:3px;height:3px;border:1px solid rgba(255,255,255,.5);transform:rotate(45deg);}
+.sig-time{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
 .sig-scroll{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:1px;height:32px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.5));overflow:hidden;z-index:4;}
 .sig-scroll span{position:absolute;top:0;left:0;width:1px;height:11px;background:rgba(255,255,255,.9);animation:sigScroll 1.8s ease-in-out infinite;}
 @media (max-width:380px){
-  .sig-names{font-size:38px;}
-  .sig-names .iv-amp{font-size:19px;}
+  .sig-names{font-size:31px;letter-spacing:2px;}
+  .sig-names .sig-dot{margin:0 9px;font-size:20px;}
   .sig-label{letter-spacing:5px;}
   .sig-overlay{padding-bottom:50px;}
   .sig-meta::before,.sig-meta::after{width:16px;}
@@ -656,7 +656,7 @@ function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,w
           <span class="sig-label">THE WEDDING OF</span>
         </div>
         <div class="sig-overlay">
-          <div class="sig-names">${namesStacked}</div>
+          <div class="sig-names">${_first}<span class="sig-dot">·</span>${_second}</div>
           <div class="sig-meta">
             <span class="sig-date">${dateStr||''}</span>
             ${timeStr?`<span class="sig-sep"></span><span class="sig-time">${timeStr}</span>`:''}
