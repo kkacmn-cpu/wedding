@@ -1133,6 +1133,11 @@ async function upMain(i){
   if(!file.type.startsWith('image/')){alert('이미지 파일만 올릴 수 있어요.');return;}
   if(file.size>10*1024*1024){alert('파일 크기가 10MB를 초과해요.');return;}
 
+  /* 새 사진 선택 → 기존 URL 즉시 무효화 (교체 보장) + 업로드 진행 표시 */
+  ST.mainPhotoUrl=null;
+  ST.mainFile=file;
+  ST._mainUploading=true;
+
   /* 미리보기 + Storage 업로드 (로그인 불필요) */
   readImg(file,d=>{
     ST.mainPhoto=d;
@@ -1152,6 +1157,7 @@ async function upMain(i){
     ST.mainPhotoUrl=null;ST.mainFile=file;
     showUpStatus('업로드 실패 — 발행 시 다시 시도합니다');
   }
+  ST._mainUploading=false;
 }
 
 function rmMain(){
@@ -1566,8 +1572,16 @@ async function _proceedPublish(){
   const btn=V('publishBtn');
   btn.disabled=true;btn.textContent='저장 중...';
 
-  /* ── 1. 보관된 File 객체 업로드 ── */
-  if(ST.mainFile&&!ST.mainPhotoUrl){
+  /* ── 0. 진행 중인 대표사진 업로드가 있으면 완료까지 대기 ── */
+  if(ST._mainUploading){
+    btn.textContent='사진 업로드 중...';
+    for(let i=0;i<60&&ST._mainUploading;i++){
+      await new Promise(r=>setTimeout(r,250)); /* 최대 15초 대기 */
+    }
+  }
+
+  /* ── 1. 보관된 File 객체 업로드 (새 사진이 있으면 무조건 재업로드) ── */
+  if(ST.mainFile){
     btn.textContent='사진 업로드 중...';
     const ext=ST.mainFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'');
     const url=await uploadFile(ST.mainFile,`${ST.anonId}/main_${Date.now()}.${ext}`);
