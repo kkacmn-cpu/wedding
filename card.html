@@ -1142,20 +1142,17 @@ function copyCardLink(){
 */
 /* 카카오 공유 이미지: 검증된 http URL만 사용, 아니면 기본 썸네일
    - http/https 아니면 제외
+   - null/undefined/빈값 → 기본 썸네일
    - blob/data/상대경로/DOM이미지/signed URL 사용 안 함 */
-function getSafeImageUrl(d){
+function getSafeImageUrl(data){
   const DEFAULT='https://kkacmn-cpu.github.io/wedding/og-default.jpg';
-  const candidates=[
-    d?.main_photo_url,
-    d?.cover_image
-  ];
-  for(let url of candidates){
-    if(!url)continue;
-    if(typeof url!=='string')continue;
-    if(!url.startsWith('http'))continue;
-    return url;
-  }
-  return DEFAULT;
+  const url=
+    data?.main_photo_url ||
+    data?.cover_image ||
+    DEFAULT;
+  if(typeof url!=='string')return DEFAULT;
+  if(!url.startsWith('http'))return DEFAULT;
+  return url;
 }
 
 function shareKakao(){
@@ -1183,7 +1180,14 @@ function shareKakao(){
 
   /* 대표사진 — 검증된 http URL만, 없으면 기본 썸네일 */
   const imageUrl=getSafeImageUrl(d);
-  console.log('KAKAO SHARE IMAGE:', imageUrl);
+  /* ── 강제 디버깅: 대표사진 URL / 원본 데이터 출력 ──
+     아래 KAKAO IMAGE URL 값을 브라우저 새 탭에서 직접 열어보세요.
+       - 사진이 보이면 → 정상
+       - 404 또는 빈 화면 → 해당 카드의 대표사진 데이터 문제 (코드 문제 아님) */
+  console.log('KAKAO IMAGE URL:', imageUrl);
+  console.log('RAW DATA:', d);
+  console.log('main_photo_url:', d?.main_photo_url);
+  console.log('👉 위 KAKAO IMAGE URL을 새 탭에서 열어 사진이 보이는지 확인하세요. 안 보이면 대표사진 데이터 문제입니다.');
 
   try{
     Kakao.Share.sendDefault({
