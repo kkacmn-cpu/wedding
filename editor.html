@@ -283,29 +283,37 @@ input,select,textarea{font-family:inherit;}
 .sub-lang{display:block;font-size:.8em;opacity:.6;font-family:var(--intl);}
 /* ===== 12종 템플릿 미리보기 CSS (card.html과 동일 디자인, 미리보기 축소판) ===== */
 /* SIGNATURE — 거의 풀스크린 사진 (미리보기) */
-.t-signature{background:#16130f;color:#3a2f26;}
+.t-signature{background:#0c0a08;color:#3a2f26;}
 .t-signature .iv-cover{padding:0;}
-.t-signature .sig-stage{position:relative;width:100%;height:540px;display:flex;flex-direction:column;background:#16130f;overflow:hidden;}
-.t-signature .sig-photo-area{position:relative;flex:0 0 82%;overflow:hidden;background:#0c0a08;}
+.t-signature .sig-hero{position:relative;width:100%;height:540px;overflow:hidden;background:#0c0a08;}
 .t-signature .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;}
-.t-signature .sig-photo-fade{position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(to bottom,transparent,rgba(22,19,15,.4) 72%,#16130f);pointer-events:none;}
-.t-signature .sig-top{position:absolute;top:26px;left:0;right:0;text-align:center;z-index:2;}
-.t-signature .sig-label{font-family:var(--display);font-size:10px;letter-spacing:6px;color:rgba(255,255,255,.82);text-shadow:0 1px 12px rgba(0,0,0,.6);}
-.t-signature .sig-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:#16130f;padding:0 18px;}
-.t-signature .sig-names{font-family:var(--display);font-size:26px;font-weight:300;letter-spacing:4px;color:#f0ebe2;line-height:1;white-space:nowrap;}
-.t-signature .sig-names .sig-dot{display:inline-block;margin:0 10px;font-size:17px;vertical-align:middle;color:#b89559;opacity:.85;}
-.t-signature .sig-meta{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:9px;white-space:nowrap;}
-.t-signature .sig-date,.t-signature .sig-time{font-family:var(--display);font-size:9.5px;letter-spacing:2px;color:rgba(240,235,226,.5);white-space:nowrap;}
-.t-signature .sig-sep{width:3px;height:3px;border:1px solid rgba(184,149,89,.6);transform:rotate(45deg);flex:none;}
+.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
+.t-signature .sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,transparent 62%,rgba(8,6,4,.5) 86%,rgba(8,6,4,.82) 100%);}
+.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 24px 38px;text-align:center;z-index:2;}
+.t-signature .sig-names{font-family:var(--display);font-size:27px;font-weight:300;letter-spacing:5px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 22px rgba(0,0,0,.5);}
+.t-signature .sig-names .sig-dot{display:inline-block;margin:0 11px;font-size:17px;vertical-align:middle;opacity:.7;}
+.t-signature .sig-date{font-family:var(--display);font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.82);margin-top:13px;white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.5);}
 @keyframes sigScroll{0%{transform:translateY(-10px);opacity:0;}40%{opacity:1;}100%{transform:translateY(28px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
 .t-signature .iv-sec-t{color:#9a7740;}
 .t-signature .iv-names{font-family:var(--display);}
 
 /* CLASSIC IVORY — 고급 종이청첩장 (미리보기) */
-.t-classic-ivory{background:linear-gradient(170deg,#fdfcf8,#f6efe0 55%,#f1e8d6);color:#3a2f26;}
-.t-classic-ivory .iv-cover{padding:46px 26px 50px;}
+.t-classic-ivory{background:#f6efe0;color:#3a2f26;}
+.t-classic-ivory .iv-cover{padding:0;}
+.t-classic-ivory .civ-stage{position:relative;width:100%;height:540px;display:flex;flex-direction:column;background:#f6efe0;overflow:hidden;}
+.t-classic-ivory .civ-photo-area{position:relative;flex:0 0 72%;overflow:hidden;background:#e8dcc6;}
+.t-classic-ivory .civ-photo{position:absolute;inset:0;width:100%;height:100%;}
+.t-classic-ivory .civ-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
+.t-classic-ivory .civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 22px;}
+.t-classic-ivory .civ-label{font-family:var(--display);font-size:9px;letter-spacing:5px;color:#b39a6a;}
+.t-classic-ivory .civ-names{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:400;letter-spacing:2px;color:#2c2218;line-height:1;white-space:nowrap;}
+.t-classic-ivory .civ-names .civ-dot{font-family:var(--display);font-style:italic;color:#bfa063;font-size:18px;margin:0 7px;}
+.t-classic-ivory .civ-divider{display:flex;align-items:center;justify-content:center;gap:9px;}
+.t-classic-ivory .civ-dash{width:30px;height:1px;background:#cbb277;}
+.t-classic-ivory .civ-diamond{font-size:7px;color:#bfa063;}
+.t-classic-ivory .civ-date{font-family:var(--display);font-size:12px;letter-spacing:3px;color:#6a5a48;white-space:nowrap;}
+.t-classic-ivory .civ-time{font-family:'Noto Serif KR',serif;font-size:10px;letter-spacing:2px;color:#9a8a76;white-space:nowrap;}
 .t-classic-ivory .cls-paper{position:relative;text-align:center;}
 .t-classic-ivory .cls-topline,.t-classic-ivory .cls-botline{width:1px;height:40px;margin:0 auto;background:linear-gradient(to bottom,transparent,#bfa063);}
 .t-classic-ivory .cls-botline{background:linear-gradient(to top,transparent,#bfa063);margin-top:6px;}
@@ -972,14 +980,11 @@ function renderTemplates(){
     /* 미니멀 타입별 미리보기 레이아웃 */
     let previewInner='';
     if(t.id==='signature'){
-      previewInner=`<div style="position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:#16130f;">
-        <div style="flex:0 0 80%;position:relative;background:linear-gradient(155deg,#cfc3b1,#9d8c73 70%,#7d6d56);overflow:hidden;">
-          <div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(to bottom,transparent,#16130f);"></div>
-          <div style="position:absolute;top:7px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-size:5.5px;letter-spacing:3px;color:rgba(255,255,255,.85);">THE WEDDING OF</div>
-        </div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:#16130f;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:300;letter-spacing:2px;color:#f0ebe2;white-space:nowrap;">민준<span style="color:#b89559;margin:0 4px;">·</span>서연</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:5.5px;letter-spacing:1px;color:rgba(240,235,226,.5);white-space:nowrap;">2026 · 07 · 13 · MON</div>
+      previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(160deg,#c9bcae,#8a7a64 75%,#6d5d48);overflow:hidden;">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(8,6,4,.55) 88%,rgba(8,6,4,.82));"></div>
+        <div style="position:absolute;bottom:11px;left:0;right:0;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:2px;color:#fff;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.5);">민준<span style="margin:0 5px;opacity:.7;">·</span>서연</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:5.5px;letter-spacing:2px;color:rgba(255,255,255,.8);margin-top:4px;">2026 · 07 · 13</div>
         </div>
       </div>`;
     }else if(t.id==='film'){
@@ -1066,11 +1071,13 @@ function renderTemplates(){
         </div>
       </div>`;
     }else if(t.id==='classic-ivory'){
-      previewInner=`<div style="width:100%;height:100%;background:linear-gradient(170deg,#fdfcf8,#f6efe0);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:6px;letter-spacing:3px;color:#b39a6a;margin-bottom:5px;">THE WEDDING OF</div>
-        <div style="width:52%;height:50%;background:linear-gradient(155deg,#c9bcaa,#9d8c74);box-shadow:0 3px 12px rgba(120,100,70,.3);"></div>
-        <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:400;letter-spacing:2px;color:#2c2218;margin-top:7px;">민준<span style="font-family:'Cormorant Garamond',serif;color:#bfa063;font-style:italic;margin:0 2px;">&amp;</span>서연</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:8px;letter-spacing:2px;color:#9a7740;margin-top:3px;">2025 · 10 · 18</div>
+      previewInner=`<div style="position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:#f6efe0;">
+        <div style="flex:0 0 70%;background:linear-gradient(155deg,#d8ccba,#a8967c);"></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:5px;letter-spacing:2px;color:#b39a6a;">THE WEDDING OF</div>
+          <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:400;letter-spacing:1px;color:#2c2218;white-space:nowrap;">민준<span style="font-family:'Cormorant Garamond',serif;color:#bfa063;font-style:italic;margin:0 4px;">&amp;</span>서연</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:6px;letter-spacing:1px;color:#8a7560;white-space:nowrap;">2026 · 07 · 13</div>
+        </div>
       </div>`;
     }else if(t.id==='minimal'){
       previewInner=`<div style="width:100%;height:100%;display:flex;flex-direction:column;background:#fff;">
@@ -1484,32 +1491,24 @@ function renderIV(playOp){
       <div class="iv-date">${dateStr||'2025. 10. 18 토요일'}</div>
     </div>`;
   }else if(tpl==='signature'){
-    const ph=photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;" alt=""/>`:photoFallback(false);
-    /* signature 전용 짧은 날짜: 2026 · 07 · 13 · MON (한 줄 보장) */
-    let sigDate=dateStr||'2026 · 07 · 13 · MON';
+    const ph=photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;" alt=""/>`:photoFallback(false);
+    let sigDate=dateStr||'2026 · 07 · 13';
     const _sdRaw=val('f_date');
     if(_sdRaw){
       const _sd=new Date(_sdRaw+'T00:00:00');
       if(!isNaN(_sd.getTime())){
-        const _dow=['SUN','MON','TUE','WED','THU','FRI','SAT'][_sd.getDay()];
         const _mm=String(_sd.getMonth()+1).padStart(2,'0');
         const _dd=String(_sd.getDate()).padStart(2,'0');
-        sigDate=`${_sd.getFullYear()} · ${_mm} · ${_dd} · ${_dow}`;
+        sigDate=`${_sd.getFullYear()} · ${_mm} · ${_dd}`;
       }
     }
     html+=`<div class="iv-cover t-signature">
-      <div class="sig-stage">
-        <div class="sig-photo-area">
-          <div class="sig-photo">${ph}</div>
-          <div class="sig-photo-fade"></div>
-          <div class="sig-top"><span class="sig-label">THE WEDDING OF</span></div>
-        </div>
-        <div class="sig-info">
+      <div class="sig-hero">
+        <div class="sig-photo">${ph}</div>
+        <div class="sig-scrim"></div>
+        <div class="sig-overlay">
           <div class="sig-names">${_ef}<span class="sig-dot">·</span>${_es}</div>
-          <div class="sig-meta">
-            <span class="sig-date">${sigDate}</span>
-            ${time?`<span class="sig-sep"></span><span class="sig-time">${time}</span>`:''}
-          </div>
+          <div class="sig-date">${sigDate}</div>
         </div>
       </div>
     </div>`;
@@ -1569,19 +1568,27 @@ function renderIV(playOp){
       <div class="iv-date">${time||'오후 2시'}</div>
     </div>`;
   }else if(tpl==='classic-ivory'){
-    const ph=photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>`:'';
+    const ph=photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;" alt=""/>`:photoFallback(false);
+    let civDate=dateStr||'2026 · 07 · 13';
+    const _cdRaw=val('f_date');
+    if(_cdRaw){
+      const _cd=new Date(_cdRaw+'T00:00:00');
+      if(!isNaN(_cd.getTime())){
+        const _mm=String(_cd.getMonth()+1).padStart(2,'0');
+        const _dd=String(_cd.getDate()).padStart(2,'0');
+        civDate=`${_cd.getFullYear()} · ${_mm} · ${_dd}`;
+      }
+    }
     html+=`<div class="iv-cover t-classic-ivory">
-      <div class="cls-paper">
-        <div class="cls-topline"></div>
-        <div class="cls-invite">INVITATION</div>
-        <div class="cls-sub">결혼식에 초대합니다</div>
-        <div class="cls-sym">&#10086;</div>
-        <div class="cls-names">${namesStackedInline}</div>
-        ${photo?`<div class="cls-photo">${ph}</div>`:''}
-        <div class="cls-divider"><span class="cls-dash"></span><span class="cls-diamond">&#9826;</span><span class="cls-dash"></span></div>
-        <div class="cls-date">${dateStr||'2025. 10. 18'}</div>
-        ${time?`<div class="cls-time">${time}</div>`:''}
-        <div class="cls-botline"></div>
+      <div class="civ-stage">
+        <div class="civ-photo-area"><div class="civ-photo">${ph}</div></div>
+        <div class="civ-info">
+          <div class="civ-label">THE WEDDING OF</div>
+          <div class="civ-names">${_ef}<span class="civ-dot">&amp;</span>${_es}</div>
+          <div class="civ-divider"><span class="civ-dash"></span><span class="civ-diamond">&#9826;</span><span class="civ-dash"></span></div>
+          <div class="civ-date">${civDate}</div>
+          ${time?`<div class="civ-time">${time}</div>`:''}
+        </div>
       </div>
     </div>`;
   }else{
