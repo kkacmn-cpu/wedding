@@ -849,7 +849,7 @@ const ST={
     return id;
   })()
 };
-let editSlug=new URLSearchParams(location.search).get('edit');
+let editSlug=new URLSearchParams(location.search).get('edit')||new URLSearchParams(location.search).get('slug');
 /* URL ?theme= 파라미터로 초기 테마 적용 */
 const _themeParam=new URLSearchParams(location.search).get('theme');
 if(_themeParam)ST.theme=_themeParam;
@@ -1620,10 +1620,17 @@ async function _proceedPublish(){
   let slug=editSlug, err;
 
   if(editId){
-    /* ⚠️ 수정 기능 준비 중 — cards 직접 update 금지 (RLS 차단 + 수정 비밀번호 RPC 미구현) */
-    btn.disabled=false;btn.textContent='발행하기';
-    alert('수정 기능은 현재 준비 중입니다.');
-    return;
+    /* ── 수정 모드: cards 직접 update 불가 (RLS 차단)
+         → update_card_by_slug RPC 경유 (구매확인/verify-order 불필요) ── */
+    d.slug=editSlug;
+    const{data:upResult,error:upErr}=await sb.rpc('update_card_by_slug',{
+      p_slug:editSlug,
+      p_card_data:d
+    });
+    btn.disabled=false;btn.textContent='수정 완료';
+    if(upErr){alert('수정 실패: '+upErr.message);return;}
+    if(upResult&&upResult.success===false){alert('수정 실패: '+upResult.error);return;}
+    slug=editSlug;
 
   }else{
     /* ── 신규 발행: 반드시 create_card_with_purchase RPC 경유
@@ -1751,24 +1758,14 @@ function clearDraft(){try{localStorage.removeItem(DRAFT_KEY);}catch(e){}}
 /* ===== 수정 모드 ===== */
 async function loadForEdit(){
   if(!editSlug)return;
-  /* ⚠️ 수정 기능은 준비 중 (수정 비밀번호 RPC 미구현)
-     이번 배포에서는 수정 모드를 비활성화하고 신규 발행만 허용 */
-  alert('수정 기능은 현재 준비 중입니다.\n새 청첩장 제작은 정상적으로 이용하실 수 있어요.');
-  editSlug=null;
-  editId=null;
-  /* URL의 ?edit= 파라미터 제거하고 신규 제작 모드로 전환 */
-  if(history.replaceState){
-    const u=new URL(location.href);u.searchParams.delete('edit');
-    history.replaceState(null,'',u.toString());
-  }
-  return;
-}
-async function _loadForEdit_disabled(){
-  if(!editSlug)return;
-  /* cards 직접 조회 금지 (RLS 차단) → get_card_by_slug RPC 사용 */
+  /* slug로 카드 조회 (cards 직접 접근 차단 → get_card_by_slug RPC 사용) */
   const{data:rows,error}=await sb.rpc('get_card_by_slug',{p_slug:editSlug});
   const data=Array.isArray(rows)?rows[0]:rows;
-  if(error||!data){editSlug=null;return;}
+  if(error||!data){
+    alert('수정할 청첩장을 찾을 수 없어요. 새 청첩장 제작 화면으로 이동합니다.');
+    editSlug=null;editId=null;
+    return;
+  }
   editId=data.id;
   const set=(id,v)=>{if(V(id)&&v!=null)V(id).value=v;};
   ['f_groom','f_bride','f_date','f_time','f_venue','f_hall','f_addr','f_msg','f_font','f_opening','f_lang2','f_msg2','f_venue2','f_gbank','f_gacc','f_gholder','f_bbank','f_bacc','f_bholder'].forEach(id=>set(id,data[id.replace('f_','').replace(/_([a-z])/g,(_,c)=>c.toUpperCase())]||data[id.slice(2)]||null));
