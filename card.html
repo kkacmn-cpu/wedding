@@ -8,12 +8,10 @@
 <meta property="og:type" content="website"/>
 <meta property="og:title" id="og-title" content="모바일 청첩장"/>
 <meta property="og:description" id="og-desc" content="저희 결혼식에 초대합니다"/>
-<meta property="og:image" id="og-image" content=""/>
-<meta property="og:image:width" content="800"/>
-<meta property="og:image:height" content="400"/>
+<meta property="og:image" id="og-image" content="https://kkacmn-cpu.github.io/wedding/og-default.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" id="tw-title" content="모바일 청첩장"/>
-<meta name="twitter:image" id="tw-image" content=""/>
+<meta name="twitter:image" id="tw-image" content="https://kkacmn-cpu.github.io/wedding/og-default.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&family=Noto+Sans+Thai:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Gowun+Batang&family=Nanum+Myeongjo&family=Song+Myung&family=Gowun+Dodum&family=Gaegu&display=swap" rel="stylesheet"/>
@@ -510,11 +508,10 @@ const SUPA_KEY='sb_publishable_pinNIcaU11HhbSz3TR__mQ_Ln4cJ79a';
 const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
 
 /* ===== 카카오 설정 ===== */
-/* TODO: Kakao Developers에서 발급한 JavaScript Key로 교체 필요 */
-const KAKAO_JS_KEY='YOUR_KAKAO_JS_KEY';
+const KAKAO_JS_KEY='595f376e62ae3df09dea25e6825e94a4';
 (function(){
   try{
-    if(window.Kakao&&!Kakao.isInitialized()&&KAKAO_JS_KEY!=='YOUR_KAKAO_JS_KEY'){
+    if(window.Kakao&&!Kakao.isInitialized()){
       Kakao.init(KAKAO_JS_KEY);
     }
   }catch(e){console.warn('Kakao SDK 초기화 실패:',e);}
@@ -1146,17 +1143,17 @@ function shareKakao(){
   const _names=_orderGb?`${_gn} ♥ ${_bn}`:`${_bn} ♥ ${_gn}`;
   const title=d?`${_names}의 결혼식에 초대합니다`:'결혼식에 초대합니다';
   const desc=d?`${d.wedding_date||''} · ${d.venue_name||''}`.trim():'';
-  const imgUrl=d?.main_photo_url||'';
+  const imgUrl=d?.main_photo_url||'https://kkacmn-cpu.github.io/wedding/og-default.jpg';
 
   /* Kakao SDK 사용 가능 여부 확인 */
-  if(window.Kakao&&Kakao.isInitialized()&&KAKAO_JS_KEY!=='YOUR_KAKAO_JS_KEY'){
+  if(window.Kakao&&Kakao.isInitialized()){
     try{
       Kakao.Share.sendDefault({
         objectType:'feed',
         content:{
           title:title,
           description:desc,
-          imageUrl:imgUrl||undefined,
+          imageUrl:imgUrl,
           link:{mobileWebUrl:cardUrl,webUrl:cardUrl}
         },
         buttons:[{title:'청첩장 보기',link:{mobileWebUrl:cardUrl,webUrl:cardUrl}}]
