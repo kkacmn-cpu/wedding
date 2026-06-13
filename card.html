@@ -451,7 +451,7 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 <!-- 플로팅 액션 버튼 -->
 <div class="fab-wrap">
   <div class="fab-menu" id="fabMenu">
-    <div class="fab-item" onclick="shareKakao()"><span class="fi">💛</span>카카오톡 공유</div>
+    <div class="fab-item" onclick="shareKakao()"><span class="fi">💛</span>카카오톡 공유하기</div>
     <div class="fab-item" onclick="copyCardLink()"><span class="fi">🔗</span>링크 복사</div>
     <div class="fab-item" onclick="showQR()"><span class="fi">🔳</span>QR 코드</div>
     <div class="fab-item" onclick="addCalendar()"><span class="fi">📅</span>달력에 저장</div>
@@ -1145,8 +1145,13 @@ function shareKakao(){
   const desc=d?`${d.wedding_date||''} · ${d.venue_name||''}`.trim():'';
   const imgUrl=d?.main_photo_url||'https://kkacmn-cpu.github.io/wedding/og-default.jpg';
 
-  /* Kakao SDK 사용 가능 여부 확인 */
-  if(window.Kakao&&Kakao.isInitialized()){
+  /* SDK 미초기화 시 한 번 더 초기화 시도 */
+  if(window.Kakao&&!Kakao.isInitialized()){
+    try{Kakao.init(KAKAO_JS_KEY);}catch(e){}
+  }
+
+  /* Kakao SDK로 카카오톡 공유창 직접 띄우기 */
+  if(window.Kakao&&Kakao.isInitialized()&&Kakao.Share){
     try{
       Kakao.Share.sendDefault({
         objectType:'feed',
@@ -1160,20 +1165,14 @@ function shareKakao(){
       });
       toggleFab();
       return;
-    }catch(e){console.warn('Kakao.Share 실패, fallback:',e);}
+    }catch(e){console.warn('Kakao.Share 실패:',e);}
   }
 
-  /* Fallback: Web Share API (모바일) 또는 링크 복사 */
-  if(navigator.share){
-    navigator.share({title,text:desc,url:cardUrl})
-      .then(()=>toggleFab())
-      .catch(()=>{});
-  }else{
-    navigator.clipboard.writeText(cardUrl)
-      .then(()=>showToast('링크 복사됨 — 카카오톡에 붙여넣기 해주세요'))
-      .catch(()=>showToast('주소창의 URL을 직접 복사해주세요'));
-    toggleFab();
-  }
+  /* SDK가 안 되는 경우: 브라우저 기본 공유창 대신 링크 복사 안내 */
+  navigator.clipboard.writeText(cardUrl)
+    .then(()=>showToast('카카오톡 공유를 사용할 수 없어 링크를 복사했어요. 카카오톡에 붙여넣기 해주세요.'))
+    .catch(()=>showToast('주소창의 URL을 직접 복사해 카카오톡에 붙여넣어 주세요.'));
+  toggleFab();
 }
 
 /* ===== 달력 저장 (.ics) ===== */
