@@ -1144,8 +1144,14 @@ async function upMain(i){
   });
   const ext=file.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'');
   const url=await uploadFile(file,`${ST.anonId}/main_${Date.now()}.${ext}`);
-  if(url){ST.mainPhotoUrl=url;ST.mainFile=null;showUpStatus('✓ 업로드 완료');}
-  else{showUpStatus('업로드 실패 — 다시 시도해주세요');}
+  if(url){
+    ST.mainPhotoUrl=url;ST.mainFile=null;
+    showUpStatus('✓ 업로드 완료');
+  }else{
+    /* 업로드 실패 → File을 보관해 발행 시 재시도 (base64는 절대 저장 안 함) */
+    ST.mainPhotoUrl=null;ST.mainFile=file;
+    showUpStatus('업로드 실패 — 발행 시 다시 시도합니다');
+  }
 }
 
 function rmMain(){
@@ -1596,6 +1602,15 @@ async function _proceedPublish(){
 
   /* ── 2. 입력값 수집 ── */
   const g=val('f_groom')||'신랑', b=val('f_bride')||'신부';
+  /* ── 대표사진/갤러리 URL 최종 검증 ──
+     반드시 https Supabase Storage Public URL만 저장
+     (base64 data:, blob:, 상대경로 등은 모두 제외) */
+  const _isPublicUrl=(u)=>typeof u==='string'
+    && /^https:\/\//i.test(u)
+    && u.includes('/storage/v1/object/public/');
+  const _mainUrl=_isPublicUrl(ST.mainPhotoUrl)?ST.mainPhotoUrl:null;
+  const _galUrls=(ST.galleryUrls||[]).filter(_isPublicUrl);
+
   const d={
     groom_name:g, bride_name:b,
     wedding_date:val('f_date')||null,
@@ -1625,8 +1640,8 @@ async function _proceedPublish(){
       groom_parents:val('f_gparent')||null,
       bride_parents:val('f_bparent')||null
     },
-    main_photo_url:safeUrl(ST.mainPhotoUrl)||null,
-    gallery_urls:(ST.galleryUrls||[]).map(u=>safeUrl(u)).filter(Boolean)
+    main_photo_url:_mainUrl,
+    gallery_urls:_galUrls
   };
 
   /* ── 3. 저장 ── */
@@ -1683,9 +1698,15 @@ async function _proceedPublish(){
     _purchaseId=null; // 사용 완료
   }
 
-  const url=new URL(`card.html?slug=${encodeURIComponent(slug)}`,location.href).href;
-  V('pubUrl').textContent=url;
-  V('pubLink').href=url;
+  /* 공유 링크: VPS SSR 주소 (카카오/SNS가 OG 태그를 읽을 수 있도록)
+     사람이 열면 VPS가 실제 카드로 자동 리다이렉트함 */
+  const VPS_BASE='https://weddingapi.duckdns.org';
+  const shareUrl=`${VPS_BASE}/card/${encodeURIComponent(slug)}`;
+  /* 청첩장 보기(미리보기) 링크: GitHub Pages 실제 카드 */
+  const viewUrl=new URL(`card.html?slug=${encodeURIComponent(slug)}`,location.href).href;
+
+  V('pubUrl').textContent=shareUrl;   /* 복사/공유용 = VPS */
+  V('pubLink').href=viewUrl;          /* 청첩장 보기 = 실제 카드 */
   V('pubTitle').textContent=editId?'청첩장이 수정됐어요!':'청첩장이 발행됐어요!';
 
   /* 신규 발행 시에만 수정번호 표시 (editCode는 이때만 생성됨) */
