@@ -1135,44 +1135,30 @@ function copyCardLink(){
    완전한 동적 썸네일을 위해서는 서버사이드 렌더링(SSR)이 필요합니다.
    현재는 card.html의 기본 OG 태그 fallback으로 대응합니다. */
 function shareKakao(){
-  const d=window._cardData;
-  const cardUrl=location.href;
-  /* 신랑/신부 표시 순서 반영 (options.order_gb===false 이면 신부 먼저) */
-  const _gn=d?.groom_name||'신랑', _bn=d?.bride_name||'신부';
-  const _orderGb=d?.options?.order_gb!==false;
-  const _names=_orderGb?`${_gn} ♥ ${_bn}`:`${_bn} ♥ ${_gn}`;
-  const title=d?`${_names}의 결혼식에 초대합니다`:'결혼식에 초대합니다';
-  const desc=d?`${d.wedding_date||''} · ${d.venue_name||''}`.trim():'';
-  const imgUrl=d?.main_photo_url||'https://kkacmn-cpu.github.io/wedding/og-default.jpg';
+  /* ── 디버그: 공유 실패 원인 추적용 ── */
+  console.log('Kakao exists:', !!window.Kakao);
+  console.log('Kakao initialized:', window.Kakao?.isInitialized?.());
+  console.log('Current URL:', location.href);
 
-  /* SDK 미초기화 시 한 번 더 초기화 시도 */
-  if(window.Kakao&&!Kakao.isInitialized()){
-    try{Kakao.init(KAKAO_JS_KEY);}catch(e){}
+  if(!window.Kakao){
+    console.error('Kakao SDK not loaded');
+    copyCardLink();
+    return;
+  }
+  if(!Kakao.isInitialized()){
+    Kakao.init('595f376e62ae3df09dea25e6825e94a4');
   }
 
-  /* Kakao SDK로 카카오톡 공유창 직접 띄우기 */
-  if(window.Kakao&&Kakao.isInitialized()&&Kakao.Share){
-    try{
-      Kakao.Share.sendDefault({
-        objectType:'feed',
-        content:{
-          title:title,
-          description:desc,
-          imageUrl:imgUrl,
-          link:{mobileWebUrl:cardUrl,webUrl:cardUrl}
-        },
-        buttons:[{title:'청첩장 보기',link:{mobileWebUrl:cardUrl,webUrl:cardUrl}}]
-      });
-      toggleFab();
-      return;
-    }catch(e){console.warn('Kakao.Share 실패:',e);}
+  try{
+    Kakao.Share.sendScrap({
+      requestUrl: location.href
+    });
+    toggleFab();
+  }catch(e){
+    console.error('Kakao share failed:', e);
+    copyCardLink();
+    showToast('카카오톡 공유를 사용할 수 없어 링크를 복사했어요. 카카오톡에 붙여넣기 해주세요.');
   }
-
-  /* SDK가 안 되는 경우: 브라우저 기본 공유창 대신 링크 복사 안내 */
-  navigator.clipboard.writeText(cardUrl)
-    .then(()=>showToast('카카오톡 공유를 사용할 수 없어 링크를 복사했어요. 카카오톡에 붙여넣기 해주세요.'))
-    .catch(()=>showToast('주소창의 URL을 직접 복사해 카카오톡에 붙여넣어 주세요.'));
-  toggleFab();
 }
 
 /* ===== 달력 저장 (.ics) ===== */
