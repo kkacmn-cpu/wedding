@@ -283,28 +283,22 @@ input,select,textarea{font-family:inherit;}
 .sub-lang{display:block;font-size:.8em;opacity:.6;font-family:var(--intl);}
 /* ===== 12종 템플릿 미리보기 CSS (card.html과 동일 디자인, 미리보기 축소판) ===== */
 /* SIGNATURE — 거의 풀스크린 사진 (미리보기) */
-.t-signature{background:#0c0a08;color:#3a2f26;}
+.t-signature{background:#14110d;color:#3a2f26;}
 .t-signature .iv-cover{padding:0;}
-.t-signature .sig-hero{position:relative;width:100%;height:540px;overflow:hidden;background:#0c0a08;}
+.t-signature .sig-stage{position:relative;width:100%;height:540px;display:flex;flex-direction:column;background:#14110d;overflow:hidden;}
+.t-signature .sig-photo-area{position:relative;flex:0 0 72%;overflow:hidden;background:#0c0a08;}
 .t-signature .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;}
-.t-signature .sig-scrim{position:absolute;inset:0;background:
-  linear-gradient(to bottom,rgba(8,6,4,.42) 0%,rgba(8,6,4,.08) 16%,rgba(8,6,4,0) 40%,rgba(8,6,4,0) 56%,rgba(8,6,4,.45) 78%,rgba(8,6,4,.88) 100%),
-  radial-gradient(130% 90% at 50% 35%,transparent 60%,rgba(8,6,4,.4) 100%);}
-.t-signature .sig-hero::before,.t-signature .sig-hero::after{content:'';position:absolute;left:0;right:0;height:36px;z-index:3;pointer-events:none;}
-.t-signature .sig-hero::before{top:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),transparent);}
-.t-signature .sig-hero::after{bottom:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent);}
-.t-signature .sig-top{position:absolute;top:28px;left:0;right:0;text-align:center;z-index:4;}
-.t-signature .sig-label{font-family:var(--display);font-size:11px;letter-spacing:6px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
-.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 22px 40px;text-align:center;z-index:4;}
-.t-signature .sig-names{font-family:var(--display);font-size:32px;font-weight:300;letter-spacing:3px;color:#fff;line-height:1.1;text-shadow:0 2px 24px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.35);}
-.t-signature .sig-names .sig-dot{display:inline-block;margin:0 10px;font-size:21px;vertical-align:middle;opacity:.6;font-weight:300;}
-.t-signature .sig-meta{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:16px;}
-.t-signature .sig-meta::before,.t-signature .sig-meta::after{content:'';width:18px;height:1px;background:rgba(255,255,255,.4);}
-.t-signature .sig-date,.t-signature .sig-time{font-family:var(--display);font-size:10.5px;letter-spacing:3px;color:rgba(255,255,255,.78);text-shadow:0 1px 10px rgba(0,0,0,.55);}
-.t-signature .sig-sep{width:3px;height:3px;border:1px solid rgba(255,255,255,.5);transform:rotate(45deg);}
-.t-signature .sig-scroll{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:1px;height:26px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.5));overflow:hidden;z-index:4;}
-.t-signature .sig-scroll span{position:absolute;top:0;left:0;width:1px;height:10px;background:rgba(255,255,255,.9);animation:sigScroll 1.8s ease-in-out infinite;}
+.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;}
+.t-signature .sig-photo-fade{position:absolute;left:0;right:0;bottom:0;height:32%;background:linear-gradient(to bottom,transparent,rgba(20,17,13,.55) 70%,#14110d);pointer-events:none;}
+.t-signature .sig-top{position:absolute;top:26px;left:0;right:0;text-align:center;z-index:2;}
+.t-signature .sig-label{font-family:var(--display);font-size:10px;letter-spacing:6px;color:rgba(255,255,255,.82);text-shadow:0 1px 12px rgba(0,0,0,.6);}
+.t-signature .sig-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:#14110d;padding:0 24px 6px;}
+.t-signature .sig-info-line{width:26px;height:1px;background:linear-gradient(to right,transparent,#b89559,transparent);}
+.t-signature .sig-names{font-family:var(--display);font-size:30px;font-weight:300;letter-spacing:4px;color:#f4efe6;line-height:1.1;}
+.t-signature .sig-names .sig-dot{display:inline-block;margin:0 11px;font-size:20px;vertical-align:middle;color:#b89559;opacity:.9;}
+.t-signature .sig-meta{display:flex;align-items:center;justify-content:center;gap:11px;}
+.t-signature .sig-date,.t-signature .sig-time{font-family:var(--display);font-size:11px;letter-spacing:4px;color:rgba(244,239,230,.62);}
+.t-signature .sig-sep{width:4px;height:4px;border:1px solid rgba(184,149,89,.7);transform:rotate(45deg);}
 @keyframes sigScroll{0%{transform:translateY(-10px);opacity:0;}40%{opacity:1;}100%{transform:translateY(28px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
 .t-signature .iv-sec-t{color:#9a7740;}
@@ -979,17 +973,15 @@ function renderTemplates(){
     /* 미니멀 타입별 미리보기 레이아웃 */
     let previewInner='';
     if(t.id==='signature'){
-      previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(155deg,#cfc3b1,#9d8c73 70%,#7d6d56);">
-        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 32%,rgba(255,255,255,.25),transparent 55%);"></div>
-        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,10,6,.35),transparent 34%,transparent 54%,rgba(15,10,6,.7));"></div>
-        <div style="position:absolute;top:10px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-size:6.5px;letter-spacing:4px;color:rgba(255,255,255,.92);">THE WEDDING OF</div>
-        <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:#fff;line-height:1.05;text-shadow:0 2px 12px rgba(0,0,0,.55);">민준<br><span style="font-style:italic;font-size:13px;opacity:.9;">&amp;</span><br>서연</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:6px;">
-            <span style="width:14px;height:1px;background:rgba(255,255,255,.6);"></span>
-            <span style="font-family:'Cormorant Garamond',serif;font-size:7px;color:rgba(255,255,255,.9);letter-spacing:2px;">2025 · 10 · 18</span>
-            <span style="width:14px;height:1px;background:rgba(255,255,255,.6);"></span>
-          </div>
+      previewInner=`<div style="position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:#14110d;">
+        <div style="flex:0 0 70%;position:relative;background:linear-gradient(155deg,#cfc3b1,#9d8c73 70%,#7d6d56);overflow:hidden;">
+          <div style="position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(to bottom,transparent,#14110d);"></div>
+          <div style="position:absolute;top:8px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-size:5.5px;letter-spacing:3px;color:rgba(255,255,255,.85);">THE WEDDING OF</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#14110d;">
+          <div style="width:18px;height:1px;background:linear-gradient(to right,transparent,#b89559,transparent);"></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:2px;color:#f4efe6;">민준<span style="color:#b89559;margin:0 5px;">·</span>서연</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:6.5px;letter-spacing:2px;color:rgba(244,239,230,.6);">2025 · 10 · 18</div>
         </div>
       </div>`;
     }else if(t.id==='film'){
@@ -1494,20 +1486,22 @@ function renderIV(playOp){
       <div class="iv-date">${dateStr||'2025. 10. 18 토요일'}</div>
     </div>`;
   }else if(tpl==='signature'){
-    const ph=photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>`:photoFallback(false);
+    const ph=photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;" alt=""/>`:photoFallback(false);
     html+=`<div class="iv-cover t-signature">
-      <div class="sig-hero">
-        <div class="sig-photo">${ph}</div>
-        <div class="sig-scrim"></div>
-        <div class="sig-top"><span class="sig-label">THE WEDDING OF</span></div>
-        <div class="sig-overlay">
+      <div class="sig-stage">
+        <div class="sig-photo-area">
+          <div class="sig-photo">${ph}</div>
+          <div class="sig-photo-fade"></div>
+          <div class="sig-top"><span class="sig-label">THE WEDDING OF</span></div>
+        </div>
+        <div class="sig-info">
+          <div class="sig-info-line"></div>
           <div class="sig-names">${_ef}<span class="sig-dot">·</span>${_es}</div>
           <div class="sig-meta">
             <span class="sig-date">${dateStr||'2025. 10. 18'}</span>
             ${time?`<span class="sig-sep"></span><span class="sig-time">${time}</span>`:''}
           </div>
         </div>
-        <div class="sig-scroll"><span></span></div>
       </div>
     </div>`;
   }else if(tpl==='magazine'){

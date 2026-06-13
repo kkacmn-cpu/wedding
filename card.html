@@ -164,41 +164,30 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 /* ============================================================
    1. SIGNATURE PHOTO — 거의 풀스크린 사진 (웨딩 매거진 첫 장)
    ============================================================ */
-.t-signature{background:#0c0a08;color:#3a2f26;}
+.t-signature{background:#14110d;color:#3a2f26;}
 .t-signature .iv-cover{padding:0;}
-.sig-hero{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;overflow:hidden;background:#0c0a08;}
+/* B안: 사진 영역(상단 72%) + 정보 패널(하단 28%) 분리 */
+.sig-stage{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;display:flex;flex-direction:column;background:#14110d;overflow:hidden;}
+.sig-photo-area{position:relative;flex:0 0 72%;overflow:hidden;background:#0c0a08;}
 .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-/* 인물 상반신이 화면 상·중앙에 오도록 (얼굴 확대 방지) */
-.sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;animation:sigKenburns 16s ease-out forwards;}
-@keyframes sigKenburns{from{transform:scale(1.045);}to{transform:scale(1);}}
-/* 시네마틱 오버레이: 상단 옅게, 중앙 투명(인물·얼굴 살림), 하단 깊게 + 미세 비네팅 */
-.sig-scrim{position:absolute;inset:0;background:
-  linear-gradient(to bottom,rgba(8,6,4,.42) 0%,rgba(8,6,4,.08) 16%,rgba(8,6,4,0) 40%,rgba(8,6,4,0) 56%,rgba(8,6,4,.45) 78%,rgba(8,6,4,.88) 100%),
-  radial-gradient(130% 90% at 50% 35%,transparent 60%,rgba(8,6,4,.4) 100%);}
-/* 상하 시네마 레터박스 */
-.sig-hero::before,.sig-hero::after{content:'';position:absolute;left:0;right:0;height:44px;z-index:3;pointer-events:none;}
-.sig-hero::before{top:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),transparent);}
-.sig-hero::after{bottom:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent);}
-.sig-top{position:absolute;top:52px;left:0;right:0;text-align:center;z-index:4;}
-.sig-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:6px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
-/* 하단 고정 영역 — 이름이 얼굴을 침범하지 않도록 아래쪽에 안정 배치 */
-.sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 32px 58px;text-align:center;z-index:4;}
-.sig-names{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;letter-spacing:3px;color:#fff;line-height:1.1;text-shadow:0 2px 30px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.35);}
-.sig-names .sig-dot{display:inline-block;margin:0 12px;font-size:24px;vertical-align:middle;opacity:.6;font-weight:300;}
-/* 날짜: 가는 라인 사이에 자간 넓은 소형 세리프 — 잡지 캡션 느낌 */
-.sig-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px;}
-.sig-meta::before,.sig-meta::after{content:'';width:20px;height:1px;background:rgba(255,255,255,.4);}
-.sig-date{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
-.sig-sep{width:3px;height:3px;border:1px solid rgba(255,255,255,.5);transform:rotate(45deg);}
-.sig-time{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.78);text-shadow:0 1px 12px rgba(0,0,0,.55);}
-.sig-scroll{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:1px;height:32px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.5));overflow:hidden;z-index:4;}
-.sig-scroll span{position:absolute;top:0;left:0;width:1px;height:11px;background:rgba(255,255,255,.9);animation:sigScroll 1.8s ease-in-out infinite;}
+.sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;animation:sigKenburns 18s ease-out forwards;}
+@keyframes sigKenburns{from{transform:scale(1.05);}to{transform:scale(1);}}
+/* 사진 하단을 정보 패널 색으로 자연스럽게 연결 */
+.sig-photo-fade{position:absolute;left:0;right:0;bottom:0;height:32%;background:linear-gradient(to bottom,transparent,rgba(20,17,13,.55) 70%,#14110d);pointer-events:none;}
+.sig-top{position:absolute;top:42px;left:0;right:0;text-align:center;z-index:2;}
+.sig-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:7px;color:rgba(255,255,255,.82);text-shadow:0 1px 14px rgba(0,0,0,.6);}
+/* 정보 패널 — 딥차콜 + 골드 디테일 */
+.sig-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#14110d;padding:0 30px 8px;}
+.sig-info-line{width:30px;height:1px;background:linear-gradient(to right,transparent,#b89559,transparent);}
+.sig-names{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;letter-spacing:4px;color:#f4efe6;line-height:1.1;}
+.sig-names .sig-dot{display:inline-block;margin:0 13px;font-size:22px;vertical-align:middle;color:#b89559;opacity:.9;}
+.sig-meta{display:flex;align-items:center;justify-content:center;gap:13px;}
+.sig-date,.sig-time{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:5px;color:rgba(244,239,230,.62);}
+.sig-sep{width:4px;height:4px;border:1px solid rgba(184,149,89,.7);transform:rotate(45deg);}
 @media (max-width:380px){
-  .sig-names{font-size:31px;letter-spacing:2px;}
-  .sig-names .sig-dot{margin:0 9px;font-size:20px;}
+  .sig-names{font-size:29px;letter-spacing:3px;}
+  .sig-names .sig-dot{margin:0 10px;font-size:19px;}
   .sig-label{letter-spacing:5px;}
-  .sig-overlay{padding-bottom:50px;}
-  .sig-meta::before,.sig-meta::after{width:16px;}
 }
 @keyframes sigScroll{0%{transform:translateY(-12px);opacity:0;}40%{opacity:1;}100%{transform:translateY(34px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
@@ -648,6 +637,25 @@ function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,w
   const phFallback=mainPhoto?`<img src="${mainPhoto}" alt="대표사진" style="width:100%;height:100%;object-fit:cover;display:block;"/>`:_fb;
 
   if(tpl==='signature'){
+    return`<div class="iv-cover t-signature">
+      <div class="sig-stage">
+        <div class="sig-photo-area">
+          <div class="sig-photo">${phFallback}</div>
+          <div class="sig-photo-fade"></div>
+          <div class="sig-top"><span class="sig-label">THE WEDDING OF</span></div>
+        </div>
+        <div class="sig-info">
+          <div class="sig-info-line"></div>
+          <div class="sig-names">${_first}<span class="sig-dot">·</span>${_second}</div>
+          <div class="sig-meta">
+            <span class="sig-date">${dateStr||''}</span>
+            ${timeStr?`<span class="sig-sep"></span><span class="sig-time">${timeStr}</span>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+  if(tpl==='__signature_old__'){
     return`<div class="iv-cover t-signature">
       <div class="sig-hero">
         <div class="sig-photo">${phFallback}</div>
