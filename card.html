@@ -169,19 +169,21 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 /* 풀스크린 포토형 — 사진이 주인공, 텍스트 최소 */
 .sig-hero{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;overflow:hidden;background:#0c0a08;}
 .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-.sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;animation:sigKenburns 20s ease-out forwards;}
+.sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 34%;display:block;animation:sigKenburns 20s ease-out forwards;}
 @keyframes sigKenburns{from{transform:scale(1.06);}to{transform:scale(1);}}
 /* 하단 안전영역만 살짝 어둡게 — 사진 대부분은 그대로 */
-.sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,transparent 62%,rgba(8,6,4,.5) 86%,rgba(8,6,4,.82) 100%);}
+.sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,6,4,.26) 0%,transparent 14%,transparent 70%,rgba(8,6,4,.42) 90%,rgba(8,6,4,.7) 100%);}
+.sig-top{position:absolute;top:40px;left:0;right:0;text-align:center;z-index:2;}
+.sig-label{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:7px;color:rgba(255,255,255,.7);text-shadow:0 1px 12px rgba(0,0,0,.5);}
 /* 텍스트는 하단 안전영역에 작고 얇게 */
-.sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 30px 46px;text-align:center;z-index:2;}
-.sig-names{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;letter-spacing:5px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.5);}
-.sig-names .sig-dot{display:inline-block;margin:0 13px;font-size:19px;vertical-align:middle;opacity:.7;}
-.sig-date{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:5px;color:rgba(255,255,255,.82);margin-top:16px;white-space:nowrap;text-shadow:0 1px 12px rgba(0,0,0,.5);}
+.sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 30px 42px;text-align:center;z-index:2;}
+.sig-names{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:6px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 22px rgba(0,0,0,.45);}
+.sig-names .sig-dot{display:inline-block;margin:0 13px;font-size:17px;vertical-align:middle;opacity:.65;}
+.sig-date{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.76);margin-top:14px;white-space:nowrap;text-shadow:0 1px 12px rgba(0,0,0,.45);}
 @media (max-width:380px){
-  .sig-names{font-size:26px;letter-spacing:4px;}
-  .sig-names .sig-dot{margin:0 10px;font-size:17px;}
-  .sig-date{font-size:10px;letter-spacing:4px;}
+  .sig-names{font-size:23px;letter-spacing:4px;}
+  .sig-names .sig-dot{margin:0 10px;font-size:15px;}
+  .sig-date{font-size:9px;letter-spacing:4px;}
 }
 @keyframes sigScroll{0%{transform:translateY(-12px);opacity:0;}40%{opacity:1;}100%{transform:translateY(34px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
@@ -198,15 +200,21 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 .civ-photo-area{position:relative;flex:0 0 72%;overflow:hidden;background:#e8dcc6;}
 .civ-photo{position:absolute;inset:0;width:100%;height:100%;}
 .civ-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
-.civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 28px;}
-.civ-label{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:6px;color:#b39a6a;}
-.civ-names{font-family:'Noto Serif KR',serif;font-size:27px;font-weight:400;letter-spacing:3px;color:#2c2218;line-height:1;white-space:nowrap;}
-.civ-names .civ-dot{font-family:'Cormorant Garamond',serif;font-style:italic;color:#bfa063;font-weight:400;font-size:20px;margin:0 9px;}
-.civ-divider{display:flex;align-items:center;justify-content:center;gap:10px;}
-.civ-dash{width:34px;height:1px;background:#cbb277;}
-.civ-diamond{font-size:8px;color:#bfa063;}
-.civ-date{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:4px;color:#6a5a48;white-space:nowrap;}
+.civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 28px;}
+.civ-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:8px;color:#b6995f;text-transform:uppercase;}
+.civ-names{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:500;letter-spacing:5px;color:#2a2018;line-height:1;white-space:nowrap;}
+.civ-names .civ-dot{font-family:'Cormorant Garamond',serif;font-style:italic;color:#b08c4b;font-weight:400;font-size:23px;margin:0 11px;}
+.civ-divider{display:flex;align-items:center;justify-content:center;gap:11px;}
+.civ-dash{width:38px;height:1px;background:linear-gradient(to right,transparent,#c9b27a);}
+.civ-divider .civ-dash:last-child{background:linear-gradient(to left,transparent,#c9b27a);}
+.civ-diamond{font-size:8px;color:#b08c4b;}
+.civ-date{font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:6px;color:#6a5a48;white-space:nowrap;}
 .civ-time{font-family:'Noto Serif KR',serif;font-size:11px;letter-spacing:2px;color:#9a8a76;white-space:nowrap;}
+@media (max-width:380px){
+  .civ-names{font-size:25px;letter-spacing:3px;}
+  .civ-names .civ-dot{margin:0 8px;font-size:19px;}
+  .civ-date{font-size:13px;letter-spacing:4px;}
+}
 @media (max-width:380px){
   .civ-names{font-size:23px;letter-spacing:2px;}
   .civ-names .civ-dot{margin:0 7px;font-size:18px;}
@@ -629,7 +637,9 @@ const TPL_MAP={
 };
 
 /* 커버 HTML 빌더 (템플릿별 완전히 다른 레이아웃) */
-function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,weddingDateRaw){
+function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,weddingDateRaw,coverLabel){
+  /* 상단 문구: undefined(구버전)면 기본값, ''면 숨김 */
+  const _coverLabel=(coverLabel===undefined||coverLabel===null)?'THE WEDDING OF':coverLabel;
   /* names: "신랑 & 신부" 또는 "신부 & 신랑" (순서 반영된 한 줄)
      namesStacked: 줄바꿈 형태로도 같은 순서 반영 */
   const _first=names.startsWith(b+'<')?b:g;
@@ -663,6 +673,7 @@ function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,w
       <div class="sig-hero">
         <div class="sig-photo">${phFallback}</div>
         <div class="sig-scrim"></div>
+        ${_coverLabel?`<div class="sig-top"><span class="sig-label">${esc(_coverLabel)}</span></div>`:''}
         <div class="sig-overlay">
           <div class="sig-names">${_first}<span class="sig-dot">·</span>${_second}</div>
           <div class="sig-date">${sigDate}</div>
@@ -838,7 +849,7 @@ function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,w
         <div class="civ-photo">${phFallback}</div>
       </div>
       <div class="civ-info">
-        <div class="civ-label">THE WEDDING OF</div>
+        ${_coverLabel?`<div class="civ-label">${esc(_coverLabel)}</div>`:''}
         <div class="civ-names">${_first}<span class="civ-dot">&amp;</span>${_second}</div>
         <div class="civ-divider"><span class="civ-dash"></span><span class="civ-diamond">&#9826;</span><span class="civ-dash"></span></div>
         <div class="civ-date">${civDate}</div>
@@ -906,7 +917,7 @@ function renderCard(card){
   let html='';
 
   /* ① 커버 (템플릿별 레이아웃) */
-  html+=buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,weddingDateRaw);
+  html+=buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,weddingDateRaw,card.options?.cover_label);
 
   /* ② 인사말 */
   if(msg){

@@ -287,12 +287,14 @@ input,select,textarea{font-family:inherit;}
 .t-signature .iv-cover{padding:0;}
 .t-signature .sig-hero{position:relative;width:100%;height:540px;overflow:hidden;background:#0c0a08;}
 .t-signature .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
-.t-signature .sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,transparent 62%,rgba(8,6,4,.5) 86%,rgba(8,6,4,.82) 100%);}
-.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 24px 38px;text-align:center;z-index:2;}
-.t-signature .sig-names{font-family:var(--display);font-size:27px;font-weight:300;letter-spacing:5px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 22px rgba(0,0,0,.5);}
-.t-signature .sig-names .sig-dot{display:inline-block;margin:0 11px;font-size:17px;vertical-align:middle;opacity:.7;}
-.t-signature .sig-date{font-family:var(--display);font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.82);margin-top:13px;white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.5);}
+.t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 34%;display:block;}
+.t-signature .sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,6,4,.28) 0%,transparent 16%,transparent 70%,rgba(8,6,4,.42) 90%,rgba(8,6,4,.7) 100%);}
+.t-signature .sig-top{position:absolute;top:24px;left:0;right:0;text-align:center;z-index:2;}
+.t-signature .sig-label{font-family:var(--display);font-size:8.5px;letter-spacing:6px;color:rgba(255,255,255,.72);text-shadow:0 1px 10px rgba(0,0,0,.5);}
+.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 24px 32px;text-align:center;z-index:2;}
+.t-signature .sig-names{font-family:var(--display);font-size:23px;font-weight:300;letter-spacing:5px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 20px rgba(0,0,0,.45);}
+.t-signature .sig-names .sig-dot{display:inline-block;margin:0 10px;font-size:15px;vertical-align:middle;opacity:.65;}
+.t-signature .sig-date{font-family:var(--display);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.75);margin-top:11px;white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.45);}
 @keyframes sigScroll{0%{transform:translateY(-10px);opacity:0;}40%{opacity:1;}100%{transform:translateY(28px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
 .t-signature .iv-sec-t{color:#9a7740;}
@@ -305,14 +307,15 @@ input,select,textarea{font-family:inherit;}
 .t-classic-ivory .civ-photo-area{position:relative;flex:0 0 72%;overflow:hidden;background:#e8dcc6;}
 .t-classic-ivory .civ-photo{position:absolute;inset:0;width:100%;height:100%;}
 .t-classic-ivory .civ-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
-.t-classic-ivory .civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 22px;}
-.t-classic-ivory .civ-label{font-family:var(--display);font-size:9px;letter-spacing:5px;color:#b39a6a;}
-.t-classic-ivory .civ-names{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:400;letter-spacing:2px;color:#2c2218;line-height:1;white-space:nowrap;}
-.t-classic-ivory .civ-names .civ-dot{font-family:var(--display);font-style:italic;color:#bfa063;font-size:18px;margin:0 7px;}
-.t-classic-ivory .civ-divider{display:flex;align-items:center;justify-content:center;gap:9px;}
-.t-classic-ivory .civ-dash{width:30px;height:1px;background:#cbb277;}
-.t-classic-ivory .civ-diamond{font-size:7px;color:#bfa063;}
-.t-classic-ivory .civ-date{font-family:var(--display);font-size:12px;letter-spacing:3px;color:#6a5a48;white-space:nowrap;}
+.t-classic-ivory .civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 22px;}
+.t-classic-ivory .civ-label{font-family:var(--display);font-size:9px;letter-spacing:7px;color:#b6995f;text-transform:uppercase;}
+.t-classic-ivory .civ-names{font-family:'Noto Serif KR',serif;font-size:23px;font-weight:500;letter-spacing:4px;color:#2a2018;line-height:1;white-space:nowrap;}
+.t-classic-ivory .civ-names .civ-dot{font-family:var(--display);font-style:italic;color:#b08c4b;font-weight:400;font-size:18px;margin:0 9px;}
+.t-classic-ivory .civ-divider{display:flex;align-items:center;justify-content:center;gap:10px;}
+.t-classic-ivory .civ-dash{width:26px;height:1px;background:linear-gradient(to right,transparent,#c9b27a);}
+.t-classic-ivory .civ-divider .civ-dash:last-child{background:linear-gradient(to left,transparent,#c9b27a);}
+.t-classic-ivory .civ-diamond{font-size:7px;color:#b08c4b;}
+.t-classic-ivory .civ-date{font-family:var(--display);font-size:13px;letter-spacing:5px;color:#6a5a48;white-space:nowrap;}
 .t-classic-ivory .civ-time{font-family:'Noto Serif KR',serif;font-size:10px;letter-spacing:2px;color:#9a8a76;white-space:nowrap;}
 .t-classic-ivory .cls-paper{position:relative;text-align:center;}
 .t-classic-ivory .cls-topline,.t-classic-ivory .cls-botline{width:1px;height:40px;margin:0 auto;background:linear-gradient(to bottom,transparent,#bfa063);}
@@ -631,6 +634,22 @@ input,select,textarea{font-family:inherit;}
       <h2 class="sec-title">분위기를 골라요</h2>
       <p class="sec-desc">사진이 주인공이 되는 6가지 감성 콘셉트. 글씨체와 첫 화면 연출이 콘셉트에 맞게 자동으로 완성돼요.</p>
       <div class="tpl-grid" id="tplGrid"></div>
+      <!-- 상단 문구 선택 -->
+      <div class="fld" style="margin-top:20px;">
+        <label class="fld-label">상단 문구 <span class="opt">첫 화면 맨 위에 작게 표시돼요</span></label>
+        <select class="fs" id="f_coverLabelSel" onchange="onCoverLabelChange()">
+          <option value="THE WEDDING OF">THE WEDDING OF</option>
+          <option value="OUR WEDDING DAY">OUR WEDDING DAY</option>
+          <option value="SAVE THE DATE">SAVE THE DATE</option>
+          <option value="FOREVER STARTS HERE">FOREVER STARTS HERE</option>
+          <option value="WITH ALL OUR LOVE">WITH ALL OUR LOVE</option>
+          <option value="__none__">사용 안 함</option>
+          <option value="__custom__">직접 입력</option>
+        </select>
+        <input type="text" class="fi" id="f_coverLabelCustom" maxlength="30" placeholder="직접 입력 (최대 30자)"
+          style="margin-top:8px;display:none;" oninput="renderIV()"/>
+        <input type="hidden" id="f_coverLabel" value="THE WEDDING OF"/>
+      </div>
       <!-- 글씨체/오프닝은 템플릿 선택 시 자동 설정 (값만 유지, UI 숨김) -->
       <input type="hidden" id="f_font" value="serif"/>
       <input type="hidden" id="f_opening" value="fade"/>
@@ -1133,6 +1152,25 @@ function filterCat(cat){
   _curCat=cat;
   renderTemplates();
 }
+/* 상단 문구(cover_label) 처리 */
+function onCoverLabelChange(){
+  const sel=V('f_coverLabelSel'), cust=V('f_coverLabelCustom');
+  if(!sel)return;
+  if(sel.value==='__custom__'){
+    if(cust){cust.style.display='block';cust.focus();}
+  }else{
+    if(cust)cust.style.display='none';
+  }
+  renderIV();
+}
+/* 현재 상단 문구 값 반환 ('' 면 숨김) */
+function getCoverLabel(){
+  const sel=V('f_coverLabelSel');
+  if(!sel)return 'THE WEDDING OF';
+  if(sel.value==='__none__')return '';
+  if(sel.value==='__custom__')return (V('f_coverLabelCustom')?.value||'').slice(0,30);
+  return sel.value;
+}
 /* 템플릿별 기본 글씨체/오프닝 (선택 시 자동 적용) */
 const THEME_DEFAULTS={
   'signature':    {font:'serif', opening:'fade'},
@@ -1502,10 +1540,12 @@ function renderIV(playOp){
         sigDate=`${_sd.getFullYear()} · ${_mm} · ${_dd}`;
       }
     }
+    const _lbl=getCoverLabel();
     html+=`<div class="iv-cover t-signature">
       <div class="sig-hero">
         <div class="sig-photo">${ph}</div>
         <div class="sig-scrim"></div>
+        ${_lbl?`<div class="sig-top"><span class="sig-label">${esc(_lbl)}</span></div>`:''}
         <div class="sig-overlay">
           <div class="sig-names">${_ef}<span class="sig-dot">·</span>${_es}</div>
           <div class="sig-date">${sigDate}</div>
@@ -1579,11 +1619,12 @@ function renderIV(playOp){
         civDate=`${_cd.getFullYear()} · ${_mm} · ${_dd}`;
       }
     }
+    const _civLbl=getCoverLabel();
     html+=`<div class="iv-cover t-classic-ivory">
       <div class="civ-stage">
         <div class="civ-photo-area"><div class="civ-photo">${ph}</div></div>
         <div class="civ-info">
-          <div class="civ-label">THE WEDDING OF</div>
+          ${_civLbl?`<div class="civ-label">${esc(_civLbl)}</div>`:''}
           <div class="civ-names">${_ef}<span class="civ-dot">&amp;</span>${_es}</div>
           <div class="civ-divider"><span class="civ-dash"></span><span class="civ-diamond">&#9826;</span><span class="civ-dash"></span></div>
           <div class="civ-date">${civDate}</div>
@@ -1786,7 +1827,8 @@ async function _proceedPublish(){
       cover:ST.cover,gallery_layout:ST.galleryLayout,
       order_gb:val('f_order')==='gb',
       groom_parents:val('f_gparent')||null,
-      bride_parents:val('f_bparent')||null
+      bride_parents:val('f_bparent')||null,
+      cover_label:getCoverLabel()
     },
     main_photo_url:_mainUrl,
     gallery_urls:_galUrls
@@ -1990,6 +2032,17 @@ async function loadForEdit(){
   document.querySelectorAll('.lp-item').forEach(el=>el.classList.toggle('on',el.dataset.l===ST.galleryLayout));
   /* 신랑/신부 순서 복원: order_gb===false 이면 'bg', 그 외 'gb' */
   if(V('f_order'))V('f_order').value=data.options?.order_gb===false?'bg':'gb';
+  /* 상단 문구(cover_label) 복원 */
+  (function(){
+    const lbl=data.options?.cover_label;
+    const sel=V('f_coverLabelSel'), cust=V('f_coverLabelCustom');
+    if(!sel)return;
+    const presets=['THE WEDDING OF','OUR WEDDING DAY','SAVE THE DATE','FOREVER STARTS HERE','WITH ALL OUR LOVE'];
+    if(lbl===''||lbl===null){ if(lbl==='')sel.value='__none__'; }
+    else if(presets.includes(lbl)){ sel.value=lbl; }
+    else if(typeof lbl==='string'){ sel.value='__custom__'; if(cust){cust.value=lbl;cust.style.display='block';} }
+    /* lbl이 undefined(구버전 카드)면 기본값 유지 */
+  })();
   ST.mainPhotoUrl=data.main_photo_url||null;ST.mainPhoto=data.main_photo_url||null;
   ST.galleryUrls=data.gallery_urls||[];ST.gallery=[...(data.gallery_urls||[])];
   const o=data.options||{};
