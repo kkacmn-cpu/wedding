@@ -1140,32 +1140,22 @@ function copyCardLink(){
    - 카카오 공유 썸네일은 sendDefault의 imageUrl로만 결정
    - imageUrl 우선순위: 대표사진 → 갤러리 → 기본 썸네일(og-default.jpg)
 */
-/* 대표사진 URL을 여러 후보에서 찾아 https 절대주소로 반환 (없으면 '') */
-function getShareImageUrl(){
-  const d=window._cardData||{};
-  /* 후보 순서: 실제 필드 → 갤러리 첫장 → DOM 렌더 이미지 */
+/* 카카오 공유 이미지: 검증된 http URL만 사용, 아니면 기본 썸네일
+   - http/https 아니면 제외
+   - blob/data/상대경로/DOM이미지/signed URL 사용 안 함 */
+function getSafeImageUrl(d){
+  const DEFAULT='https://kkacmn-cpu.github.io/wedding/og-default.jpg';
   const candidates=[
-    d.main_photo_url,
-    d.main_photo,
-    d.cover_image,
-    Array.isArray(d.gallery_urls)?d.gallery_urls[0]:null,
-    Array.isArray(d.photos)?d.photos[0]:null,
+    d?.main_photo_url,
+    d?.cover_image
   ];
-  /* DOM에서 실제 렌더된 대표/첫 이미지 src도 후보에 추가 */
-  const domImg=document.querySelector('.cls-photo img')
-            ||document.querySelector('.iv-main img')
-            ||document.querySelector('#card img');
-  if(domImg&&domImg.src)candidates.push(domImg.src);
-
-  for(const c of candidates){
-    if(!c)continue;
-    const s=String(c).trim();
-    /* blob:, data:, 상대경로 등 비-http 차단 */
-    if(/^https?:\/\//i.test(s)){
-      try{return new URL(s,location.origin).href;}catch(e){}
-    }
+  for(let url of candidates){
+    if(!url)continue;
+    if(typeof url!=='string')continue;
+    if(!url.startsWith('http'))continue;
+    return url;
   }
-  return '';
+  return DEFAULT;
 }
 
 function shareKakao(){
@@ -1191,16 +1181,9 @@ function shareKakao(){
   const title=d?`${_names}의 결혼식에 초대합니다`:(document.title||'모바일 청첩장');
   const desc=d?`${d.wedding_date||''} · ${d.venue_name||''}`.trim():'소중한 날에 초대합니다.';
 
-  /* 대표사진 절대주소 (없으면 기본 썸네일로 대체) */
-  const DEFAULT_IMG='https://kkacmn-cpu.github.io/wedding/og-default.jpg';
-  let absoluteImageUrl=getShareImageUrl();
-  console.log('KAKAO SHARE IMAGE:', absoluteImageUrl);
-
-  if(!absoluteImageUrl){
-    /* 대표사진이 전혀 없으면 기본 썸네일 사용 (공유는 진행) */
-    console.warn('대표사진 URL 없음 → 기본 썸네일 사용');
-    absoluteImageUrl=DEFAULT_IMG;
-  }
+  /* 대표사진 — 검증된 http URL만, 없으면 기본 썸네일 */
+  const imageUrl=getSafeImageUrl(d);
+  console.log('KAKAO SHARE IMAGE:', imageUrl);
 
   try{
     Kakao.Share.sendDefault({
@@ -1208,7 +1191,7 @@ function shareKakao(){
       content:{
         title:title,
         description:desc,
-        imageUrl:absoluteImageUrl,
+        imageUrl:imageUrl,
         link:{mobileWebUrl:cardUrl,webUrl:cardUrl}
       },
       buttons:[{title:'청첩장 보기',link:{mobileWebUrl:cardUrl,webUrl:cardUrl}}]
