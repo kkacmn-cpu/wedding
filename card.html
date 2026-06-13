@@ -1149,9 +1149,36 @@ function shareKakao(){
     Kakao.init('595f376e62ae3df09dea25e6825e94a4');
   }
 
+  const d=window._cardData;
+  const cardUrl=location.href;
+
+  /* 제목/설명 */
+  const _gn=d?.groom_name||'신랑', _bn=d?.bride_name||'신부';
+  const _orderGb=d?.options?.order_gb!==false;
+  const _names=_orderGb?`${_gn} ♥ ${_bn}`:`${_bn} ♥ ${_gn}`;
+  const title=d?`${_names}의 결혼식에 초대합니다`:(document.title||'모바일 청첩장');
+  const desc=d?`${d.wedding_date||''} · ${d.venue_name||''}`.trim():'소중한 날에 초대합니다.';
+
+  /* 대표사진 — 반드시 절대 http/https URL이어야 함
+     safeUrl()이 blob:/data:/상대경로/비http 를 모두 걸러 '' 반환
+     대표사진이 없거나 부적합하면 기본 썸네일(절대주소) 사용 */
+  const DEFAULT_IMG='https://kkacmn-cpu.github.io/wedding/og-default.jpg';
+  let imgUrl=safeUrl(d?.main_photo_url||'');
+  if(!imgUrl){imgUrl=DEFAULT_IMG;}
+  /* 혹시 상대경로가 통과했을 경우까지 절대주소로 한 번 더 보정 */
+  try{imgUrl=new URL(imgUrl,location.origin).href;}catch(e){imgUrl=DEFAULT_IMG;}
+  console.log('Kakao share imageUrl:', imgUrl);
+
   try{
-    Kakao.Share.sendScrap({
-      requestUrl: location.href
+    Kakao.Share.sendDefault({
+      objectType:'feed',
+      content:{
+        title:title,
+        description:desc,
+        imageUrl:imgUrl,
+        link:{mobileWebUrl:cardUrl,webUrl:cardUrl}
+      },
+      buttons:[{title:'청첩장 보기',link:{mobileWebUrl:cardUrl,webUrl:cardUrl}}]
     });
     toggleFab();
   }catch(e){
