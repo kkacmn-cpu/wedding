@@ -164,23 +164,37 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 /* ============================================================
    1. SIGNATURE PHOTO — 거의 풀스크린 사진 (웨딩 매거진 첫 장)
    ============================================================ */
-.t-signature{background:#f7f3ec;color:#3a2f26;}
+.t-signature{background:#0c0a08;color:#3a2f26;}
 .t-signature .iv-cover{padding:0;}
-.sig-hero{position:relative;width:100%;height:92vh;min-height:560px;max-height:920px;overflow:hidden;}
+.sig-hero{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;overflow:hidden;background:#0c0a08;}
 .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
-.sig-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-.sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,10,6,.34) 0%,rgba(15,10,6,.04) 22%,rgba(15,10,6,0) 46%,rgba(15,10,6,.2) 70%,rgba(15,10,6,.72) 100%);}
-.sig-top{position:absolute;top:42px;left:0;right:0;text-align:center;}
-.sig-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:7px;color:rgba(255,255,255,.88);text-shadow:0 1px 14px rgba(0,0,0,.5);}
-.sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 30px 64px;text-align:center;}
-.sig-names{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:300;letter-spacing:2px;color:#fff;line-height:1.18;text-shadow:0 2px 30px rgba(0,0,0,.5);}
-.sig-names .iv-amp{font-style:italic;font-weight:300;display:block;font-size:26px;margin:6px 0;opacity:.85;}
-.sig-meta{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px;}
-.sig-date{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:4px;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.5);}
-.sig-sep{width:5px;height:5px;border:1px solid rgba(255,255,255,.7);transform:rotate(45deg);}
-.sig-time{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:4px;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.5);}
-.sig-scroll{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:1px;height:34px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.7));overflow:hidden;}
+.sig-photo img{width:100%;height:100%;object-fit:cover;display:block;animation:sigKenburns 14s ease-out forwards;}
+@keyframes sigKenburns{from{transform:scale(1.08);}to{transform:scale(1);}}
+/* 시네마틱 다중 오버레이: 상단 살짝, 중앙 투명, 하단 깊게 + 비네팅 */
+.sig-scrim{position:absolute;inset:0;background:
+  linear-gradient(to bottom,rgba(8,6,4,.55) 0%,rgba(8,6,4,.12) 18%,rgba(8,6,4,0) 42%,rgba(8,6,4,.28) 64%,rgba(8,6,4,.82) 100%),
+  radial-gradient(120% 80% at 50% 38%,transparent 55%,rgba(8,6,4,.45) 100%);}
+/* 상하 시네마 레터박스 라인 */
+.sig-hero::before,.sig-hero::after{content:'';position:absolute;left:0;right:0;height:38px;z-index:3;pointer-events:none;}
+.sig-hero::before{top:0;background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent);}
+.sig-hero::after{bottom:0;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);}
+.sig-top{position:absolute;top:48px;left:0;right:0;text-align:center;z-index:4;}
+.sig-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:8px;color:rgba(255,255,255,.82);text-shadow:0 1px 16px rgba(0,0,0,.6);}
+.sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 30px 72px;text-align:center;z-index:4;}
+.sig-names{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;letter-spacing:1px;color:#fff;line-height:1.12;text-shadow:0 2px 40px rgba(0,0,0,.6),0 0 1px rgba(0,0,0,.4);}
+.sig-names .iv-amp{font-style:italic;font-weight:300;display:block;font-size:26px;margin:8px 0;opacity:.78;}
+.sig-meta{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:28px;}
+.sig-date{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:5px;color:rgba(255,255,255,.9);text-shadow:0 1px 14px rgba(0,0,0,.6);}
+.sig-sep{width:5px;height:5px;border:1px solid rgba(255,255,255,.65);transform:rotate(45deg);}
+.sig-time{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:5px;color:rgba(255,255,255,.9);text-shadow:0 1px 14px rgba(0,0,0,.6);}
+.sig-scroll{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.6));overflow:hidden;z-index:4;}
 .sig-scroll span{position:absolute;top:0;left:0;width:1px;height:12px;background:rgba(255,255,255,.95);animation:sigScroll 1.8s ease-in-out infinite;}
+@media (max-width:380px){
+  .sig-names{font-size:44px;}
+  .sig-names .iv-amp{font-size:23px;}
+  .sig-label{letter-spacing:6px;}
+  .sig-overlay{padding-bottom:60px;}
+}
 @keyframes sigScroll{0%{transform:translateY(-12px);opacity:0;}40%{opacity:1;}100%{transform:translateY(34px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
 .t-signature .iv-sec-t{color:#9a7740;}
