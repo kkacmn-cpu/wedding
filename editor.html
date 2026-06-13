@@ -791,6 +791,17 @@ input,select,textarea{font-family:inherit;}
       <button class="btn btn-ghost" id="pubCopyBtn" onclick="copyUrl()">🔗 링크 복사</button>
       <a class="btn btn-gold" id="pubLink" href="#" target="_blank">청첩장 보기 →</a>
     </div>
+
+    <div id="pubEditWrap" style="display:none;margin-top:22px;padding-top:20px;border-top:1px solid var(--line,rgba(184,148,95,.25));">
+      <p style="font-size:13.5px;color:var(--brown-soft,#8a7a68);line-height:1.7;word-break:keep-all;margin-bottom:12px;">
+        ✏️ <b>수정번호</b>입니다. 수정이 필요할 때 사용하는 번호입니다.<br>
+        <b style="color:#c0392b;">꼭 저장해 주세요.</b>
+      </p>
+      <div class="pub-url" id="pubEditCode" style="font-size:26px;font-weight:700;letter-spacing:6px;text-align:center;"></div>
+      <div class="modal-btns" style="margin-top:10px;">
+        <button class="btn btn-ghost" id="pubEditCopyBtn" onclick="copyEditCode()" style="width:100%;">🔑 수정번호 복사</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -850,10 +861,12 @@ const ST={
   })()
 };
 let editSlug=new URLSearchParams(location.search).get('edit')||new URLSearchParams(location.search).get('slug');
+let editCode=new URLSearchParams(location.search).get('editCode')||null;
 /* URL ?theme= 파라미터로 초기 테마 적용 */
 const _themeParam=new URLSearchParams(location.search).get('theme');
 if(_themeParam)ST.theme=_themeParam;
 let editId=null;
+let _newEditCode=null; /* 신규 발행 시 생성된 6자리 수정번호 (발행 화면 표시용) */
 let curStep=0;
 
 /* ===== XSS 방어 유틸 ===== */
@@ -1625,7 +1638,8 @@ async function _proceedPublish(){
     d.slug=editSlug;
     const{data:upResult,error:upErr}=await sb.rpc('update_card_by_slug',{
       p_slug:editSlug,
-      p_card_data:d
+      p_card_data:d,
+      p_edit_code:editCode
     });
     btn.disabled=false;btn.textContent='수정 완료';
     if(upErr){alert('수정 실패: '+upErr.message);return;}
@@ -1645,9 +1659,13 @@ async function _proceedPublish(){
     slug=`${g}-${b}-${Math.random().toString(36).substr(2,4)}`.replace(/\s+/g,'-');
     d.slug=slug;
 
+    /* 6자리 수정번호 생성 (평문은 발행 화면에만 표시, DB엔 해시만) */
+    _newEditCode=String(Math.floor(100000+Math.random()*900000));
+
     const{data:rpcResult,error:rpcErr}=await sb.rpc('create_card_with_purchase',{
       p_purchase_id:_purchaseId,
-      p_card_data:d
+      p_card_data:d,
+      p_edit_code:_newEditCode
     });
     btn.disabled=false;btn.textContent='발행하기';
 
@@ -1669,10 +1687,22 @@ async function _proceedPublish(){
   V('pubUrl').textContent=url;
   V('pubLink').href=url;
   V('pubTitle').textContent=editId?'청첩장이 수정됐어요!':'청첩장이 발행됐어요!';
+
+  /* 신규 발행 시에만 수정번호 표시 (editCode는 이때만 생성됨) */
+  if(!editId&&_newEditCode){
+    if(V('pubEditCode')){
+      V('pubEditCode').textContent=_newEditCode;
+      if(V('pubEditWrap'))V('pubEditWrap').style.display='block';
+    }
+  }else{
+    if(V('pubEditWrap'))V('pubEditWrap').style.display='none';
+  }
+
   V('pubOv').classList.add('show');
   clearDraft();
 }
 function copyUrl(){navigator.clipboard.writeText(V('pubUrl').textContent).then(()=>{const b=V('pubCopyBtn');b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='🔗 링크 복사',1500);});}
+function copyEditCode(){navigator.clipboard.writeText(V('pubEditCode').textContent).then(()=>{const b=V('pubEditCopyBtn');b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='🔑 수정번호 복사',1500);});}
 
 /* ===== 주문 인증 ===== */
 function closeOrderModal(){
@@ -1758,12 +1788,18 @@ function clearDraft(){try{localStorage.removeItem(DRAFT_KEY);}catch(e){}}
 /* ===== 수정 모드 ===== */
 async function loadForEdit(){
   if(!editSlug)return;
-  /* slug로 카드 조회 (cards 직접 접근 차단 → get_card_by_slug RPC 사용) */
-  const{data:rows,error}=await sb.rpc('get_card_by_slug',{p_slug:editSlug});
+  /* 수정번호 필수 — 없으면 수정 불가 (card.html 수정하기 버튼으로 진입해야 함) */
+  if(!editCode){
+    alert('수정 권한이 없습니다.\n청첩장 화면의 "수정하기" 버튼을 눌러 수정번호를 입력해주세요.');
+    editSlug=null;editId=null;
+    return;
+  }
+  /* 수정번호 검증 후 데이터 반환 (get_card_for_edit RPC) */
+  const{data:rows,error}=await sb.rpc('get_card_for_edit',{p_slug:editSlug,p_edit_code:editCode});
   const data=Array.isArray(rows)?rows[0]:rows;
   if(error||!data){
-    alert('수정할 청첩장을 찾을 수 없어요. 새 청첩장 제작 화면으로 이동합니다.');
-    editSlug=null;editId=null;
+    alert('수정번호가 올바르지 않거나 청첩장을 찾을 수 없어요.');
+    editSlug=null;editId=null;editCode=null;
     return;
   }
   editId=data.id;

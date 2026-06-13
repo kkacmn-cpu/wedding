@@ -457,6 +457,7 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
     <div class="fab-item" onclick="copyCardLink()"><span class="fi">🔗</span>링크 복사</div>
     <div class="fab-item" onclick="showQR()"><span class="fi">🔳</span>QR 코드</div>
     <div class="fab-item" onclick="addCalendar()"><span class="fi">📅</span>달력에 저장</div>
+    <div class="fab-item" onclick="openEditModal()"><span class="fi">✏️</span>수정하기</div>
   </div>
   <button class="fab-main" id="fabMain" onclick="toggleFab()">⋯</button>
 </div>
@@ -477,6 +478,24 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 
 <!-- 토스트 -->
 <div class="toast" id="toast"></div>
+
+<!-- 수정번호 입력 모달 -->
+<div class="qr-ov" id="editOv">
+  <div class="qr-modal">
+    <h3>청첩장 수정</h3>
+    <p>발행 시 받으신 <b>6자리 수정번호</b>를 입력해주세요.</p>
+    <input id="editCodeInput" inputmode="numeric" maxlength="6" placeholder="••••••"
+      style="width:100%;text-align:center;font-size:24px;letter-spacing:8px;padding:14px;border:1.5px solid var(--line,#e6ddd0);border-radius:12px;margin-bottom:8px;box-sizing:border-box;"/>
+    <div id="editErr" style="color:#c0392b;font-size:13px;min-height:18px;margin-bottom:12px;"></div>
+    <div class="qr-btns">
+      <button class="qr-dl" id="editGoBtn" onclick="submitEditCode()">수정하기</button>
+      <button class="qr-close-btn" onclick="closeEditModal()">닫기</button>
+    </div>
+    <p style="font-size:11.5px;color:var(--brown-mute,#a89a86);margin-top:14px;line-height:1.6;">
+      수정번호를 잃어버리셨나요?<br>구매하신 판매자에게 문의해주세요.
+    </p>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- 카카오 JavaScript SDK -->
@@ -1224,6 +1243,43 @@ function _drawQR(url,container){
 
 function closeQR(){
   const ov=document.getElementById('qrOv');if(ov)ov.classList.remove('show');
+}
+
+/* ===== 수정번호 입력 / 검증 ===== */
+function openEditModal(){
+  const menu=document.getElementById('fabMenu');if(menu)menu.classList.remove('open');
+  const err=document.getElementById('editErr');if(err)err.textContent='';
+  const inp=document.getElementById('editCodeInput');if(inp)inp.value='';
+  const ov=document.getElementById('editOv');if(ov)ov.classList.add('show');
+  if(inp)setTimeout(()=>inp.focus(),100);
+}
+function closeEditModal(){
+  const ov=document.getElementById('editOv');if(ov)ov.classList.remove('show');
+}
+async function submitEditCode(){
+  const inp=document.getElementById('editCodeInput');
+  const err=document.getElementById('editErr');
+  const btn=document.getElementById('editGoBtn');
+  const code=(inp?.value||'').replace(/\D/g,'').trim();
+  if(err)err.textContent='';
+  if(code.length!==6){if(err)err.textContent='6자리 숫자를 입력해주세요.';return;}
+  if(!slug){if(err)err.textContent='청첩장 정보를 찾을 수 없어요.';return;}
+
+  if(btn){btn.disabled=true;btn.textContent='확인 중...';}
+  try{
+    const{data,error}=await sb.rpc('verify_edit_code',{p_slug:slug,p_edit_code:code});
+    if(error){if(err)err.textContent='확인 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.';}
+    else if(data&&data.ok){
+      /* 검증 성공 → editor 진입 (editCode 전달) */
+      location.href='editor.html?slug='+encodeURIComponent(slug)+'&editCode='+encodeURIComponent(code);
+      return;
+    }else{
+      if(err)err.textContent=(data&&data.error)||'수정번호가 일치하지 않습니다.';
+    }
+  }catch(e){
+    if(err)err.textContent='확인 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.';
+  }
+  if(btn){btn.disabled=false;btn.textContent='수정하기';}
 }
 
 function downloadQR(){
