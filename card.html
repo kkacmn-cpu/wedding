@@ -218,6 +218,66 @@ body{font-family:var(--sans);background:var(--ivory);color:var(--brown);min-heig
 .civ-diamond{font-size:8px;color:#b08c4b;}
 .civ-date{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:6px;color:#6a5a48;white-space:nowrap;}
 .civ-time{font-family:'Noto Serif KR',serif;font-size:11px;letter-spacing:2px;color:#9a8a76;white-space:nowrap;}
+
+/* ===== 묶음2: black/flower/hanok/minimal 사진형 커버 (실제 카드 100vh) ===== */
+.t-black .bk-stage{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;display:flex;flex-direction:column;background:#100d0a;overflow:hidden;}
+.t-black .bk-photo-area{position:relative;flex:0 0 70%;overflow:hidden;background:#0a0807;}
+.t-black .bk-photo{position:absolute;inset:0;width:100%;height:100%;}
+.t-black .bk-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
+.t-black .bk-photo-fade{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(to bottom,transparent,rgba(16,13,10,.6) 65%,#100d0a);pointer-events:none;}
+.t-black .bk-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#100d0a;padding:0 28px calc(0px + env(safe-area-inset-bottom,0px));}
+.t-black .bk-label{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:7px;color:#b89559;text-transform:uppercase;}
+.t-black .bk-names{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;letter-spacing:5px;color:#ece3d2;line-height:1;white-space:nowrap;}
+.t-black .bk-names .bk-dot{margin:0 13px;color:#b89559;font-size:20px;}
+.t-black .bk-divider{display:flex;align-items:center;justify-content:center;gap:11px;}
+.t-black .bk-dash{width:32px;height:1px;background:linear-gradient(to right,transparent,#8a6d3a);}
+.t-black .bk-divider .bk-dash:last-child{background:linear-gradient(to left,transparent,#8a6d3a);}
+.t-black .bk-diamond{font-size:7px;color:#b89559;}
+.t-black .bk-date{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:5px;color:rgba(236,227,210,.6);white-space:nowrap;}
+.t-black .bk-time{font-family:'Noto Serif KR',serif;font-size:11px;letter-spacing:2px;color:rgba(236,227,210,.4);white-space:nowrap;}
+.t-flower .fl-hero{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;overflow:hidden;background:#cabfae;}
+.t-flower .fl-photo{position:absolute;inset:0;width:100%;height:100%;}
+.t-flower .fl-photo img{width:100%;height:100%;object-fit:cover;object-position:center 34%;display:block;animation:sigKenburns 22s ease-out forwards;}
+.t-flower .fl-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 28%,rgba(255,250,242,.35),transparent 60%);pointer-events:none;}
+.t-flower .fl-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(60,50,40,.12) 0%,transparent 24%,transparent 64%,rgba(50,40,32,.42) 90%,rgba(50,40,32,.66));}
+.t-flower .fl-top{position:absolute;top:40px;left:0;right:0;text-align:center;z-index:2;}
+.t-flower .fl-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,.92);text-shadow:0 1px 8px rgba(0,0,0,.35);}
+.t-flower .fl-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 30px calc(44px + env(safe-area-inset-bottom,0px));text-align:center;z-index:2;}
+.t-flower .fl-names{font-family:'Noto Serif KR',serif;font-size:29px;font-weight:300;letter-spacing:4px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1px 16px rgba(0,0,0,.4);}
+.t-flower .fl-names .fl-dot{margin:0 12px;opacity:.7;}
+.t-flower .fl-date{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:5px;color:rgba(255,255,255,.85);margin-top:15px;white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.4);}
+.t-hanok .hk-stage{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;display:flex;flex-direction:column;background:#efe6d4;overflow:hidden;}
+.t-hanok .hk-photo-area{position:relative;flex:0 0 70%;overflow:hidden;background:#d8cab0;}
+.t-hanok .hk-photo{position:absolute;inset:0;width:100%;height:100%;}
+.t-hanok .hk-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
+.t-hanok .hk-photo-fade{position:absolute;left:0;right:0;bottom:0;height:20%;background:linear-gradient(to bottom,transparent,rgba(239,230,212,.6) 60%,#efe6d4);pointer-events:none;}
+.t-hanok .hk-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(170deg,#f6efe0,#efe2cc);padding:0 28px calc(0px + env(safe-area-inset-bottom,0px));}
+.t-hanok .hk-label{font-family:'Noto Serif KR',serif;font-size:10px;letter-spacing:6px;color:#9a7a4f;}
+.t-hanok .hk-names{font-family:'Noto Serif KR',serif;font-size:29px;font-weight:600;letter-spacing:5px;color:#3a2a1a;line-height:1;white-space:nowrap;}
+.t-hanok .hk-names .hk-dot{margin:0 13px;color:#a8753a;}
+.t-hanok .hk-divider{width:36px;height:1px;background:#c2a878;}
+.t-hanok .hk-date{font-family:'Noto Serif KR',serif;font-size:13px;letter-spacing:5px;color:#6a5436;white-space:nowrap;}
+.t-hanok .hk-time{font-family:'Noto Serif KR',serif;font-size:11px;letter-spacing:2px;color:#9a8460;white-space:nowrap;}
+.t-minimal .stl-stage{position:relative;width:100%;height:100vh;min-height:600px;max-height:1000px;display:flex;flex-direction:column;background:#fff;overflow:hidden;}
+.t-minimal .stl-photo-area{position:relative;flex:0 0 56%;overflow:hidden;background:#e8e4dd;}
+.t-minimal .stl-photo{position:absolute;inset:0;width:100%;height:100%;}
+.t-minimal .stl-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
+.t-minimal .stl-info{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 32px calc(0px + env(safe-area-inset-bottom,0px));background:#fff;}
+.t-minimal .stl-label{font-size:10px;letter-spacing:4px;color:#a8a8a8;margin-bottom:10px;text-transform:uppercase;}
+.t-minimal .stl-names{font-family:'Helvetica Neue','Noto Sans KR',sans-serif;font-size:38px;font-weight:700;line-height:1.06;letter-spacing:-.5px;color:#161616;}
+.t-minimal .stl-date{font-size:11px;letter-spacing:2px;color:#999;margin-top:16px;}
+
+/* ===== 묶음2: 사진형 6개 약한 톤 보정 filter (원본 불변, 표시용) ===== */
+.sig-photo img{filter:contrast(1.05) saturate(1.03) brightness(1.02) sepia(.04);}
+.civ-photo img{filter:brightness(1.05) contrast(.97) saturate(.98);}
+.t-black .bk-photo img{filter:contrast(1.12) brightness(.92) saturate(1.02);}
+.t-flower .fl-photo img{filter:sepia(.08) saturate(1.04) brightness(1.03) contrast(.98);}
+.t-hanok .hk-photo img{filter:sepia(.14) saturate(.92) contrast(1) brightness(1);}
+.t-minimal .stl-photo img{filter:contrast(1.1) saturate(.9);}
+@media (max-width:380px){
+  .t-black .bk-names,.t-flower .fl-names,.t-hanok .hk-names{font-size:25px;letter-spacing:3px;}
+  .t-minimal .stl-names{font-size:32px;}
+}
 @media (max-width:380px){
   .civ-names{font-size:25px;letter-spacing:3px;}
   .civ-names .civ-dot{margin:0 8px;font-size:19px;}
@@ -752,11 +812,17 @@ function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,w
       </div></div>`;
   }
   if(tpl==='minimal'){
-    return`<div class="iv-cover t-minimal" style="padding:72px 32px 56px;text-align:left;">
-      <div class="iv-eyebrow">Wedding Invitation</div>
-      <div class="iv-names">${namesStackedInline}</div>
-      <div class="iv-div"></div>
-      <div class="iv-date">${dateStr||''}</div>
+    let stlDate=dateStr||'';
+    if(weddingDateRaw){const _d=new Date(weddingDateRaw+'T00:00:00');if(!isNaN(_d.getTime())){stlDate=`${_d.getFullYear()}. ${String(_d.getMonth()+1).padStart(2,'0')}. ${String(_d.getDate()).padStart(2,'0')}`;}}
+    return`<div class="iv-cover t-minimal">
+      <div class="stl-stage">
+        <div class="stl-photo-area"><div class="stl-photo">${phFallback}</div></div>
+        <div class="stl-info">
+          ${_coverLabel?`<div class="stl-label">${esc(_coverLabel)}</div>`:''}
+          <div class="stl-names">${_first}<br>${_second}</div>
+          <div class="stl-date">${stlDate}</div>
+        </div>
+      </div>
     </div>`;
   }
   if(tpl==='gold-serif'){
@@ -804,33 +870,51 @@ function buildCoverHtml(tpl,g,b,names,dateStr,timeStr,mainPhoto,lang2,langDate,w
     </div>`;
   }
   if(tpl==='hanok'){
-    return`<div class="iv-cover t-hanok" style="padding:48px 28px 40px;text-align:center;position:relative;">
-      <div style="position:absolute;left:24px;right:24px;top:24px;height:1px;background:linear-gradient(90deg,transparent,#8a7a50,transparent);"></div>
-      <div class="iv-eyebrow">혼례에 초대합니다</div>
-      <div class="iv-names">${names}</div>
-      <div style="width:150px;height:150px;border-radius:4px;border:1px solid #c4b080;overflow:hidden;margin:20px auto;">${phFallback}</div>
-      <div class="iv-div"></div>
-      <div class="iv-date">${dateStr||''}${timeStr?' '+timeStr:''}</div>
-      <div style="position:absolute;left:24px;right:24px;bottom:24px;height:1px;background:linear-gradient(90deg,transparent,#8a7a50,transparent);"></div>
+    let hkDate=dateStr||'';
+    if(weddingDateRaw){const _d=new Date(weddingDateRaw+'T00:00:00');if(!isNaN(_d.getTime())){hkDate=`${_d.getFullYear()} · ${String(_d.getMonth()+1).padStart(2,'0')} · ${String(_d.getDate()).padStart(2,'0')}`;}}
+    return`<div class="iv-cover t-hanok">
+      <div class="hk-stage">
+        <div class="hk-photo-area"><div class="hk-photo">${phFallback}</div><div class="hk-photo-fade"></div></div>
+        <div class="hk-info">
+          ${_coverLabel?`<div class="hk-label">${esc(_coverLabel)}</div>`:''}
+          <div class="hk-names">${_first}<span class="hk-dot">·</span>${_second}</div>
+          <div class="hk-divider"></div>
+          <div class="hk-date">${hkDate}</div>
+          ${timeStr?`<div class="hk-time">${timeStr}</div>`:''}
+        </div>
+      </div>
     </div>`;
   }
   if(tpl==='flower'){
-    return`<div class="iv-cover t-flower" style="padding:56px 28px 44px;text-align:center;">
-      <div class="iv-deco-top">✿ ❀ ✿</div>
-      <div class="iv-eyebrow">We're getting married</div>
-      <div style="width:160px;height:200px;border-radius:80px 80px 12px 12px;border:2px solid rgba(232,160,144,.4);overflow:hidden;margin:18px auto;">${phFallback}</div>
-      <div class="iv-names">${names}</div>
-      <div class="iv-div"></div>
-      <div class="iv-date">${dateStr||''}${timeStr?' '+timeStr:''}</div>
+    let flDate=dateStr||'';
+    if(weddingDateRaw){const _d=new Date(weddingDateRaw+'T00:00:00');if(!isNaN(_d.getTime())){flDate=`${_d.getFullYear()} · ${String(_d.getMonth()+1).padStart(2,'0')} · ${String(_d.getDate()).padStart(2,'0')}`;}}
+    return`<div class="iv-cover t-flower">
+      <div class="fl-hero">
+        <div class="fl-photo">${phFallback}</div>
+        <div class="fl-glow"></div>
+        <div class="fl-scrim"></div>
+        ${_coverLabel?`<div class="fl-top"><span class="fl-label">${esc(_coverLabel)}</span></div>`:''}
+        <div class="fl-overlay">
+          <div class="fl-names">${_first}<span class="fl-dot">·</span>${_second}</div>
+          <div class="fl-date">${flDate}</div>
+        </div>
+      </div>
     </div>`;
   }
   if(tpl==='black'){
-    return`<div class="iv-cover t-black" style="padding:52px 28px 40px;text-align:center;">
-      <div class="iv-eyebrow">We are getting married</div>
-      <div class="iv-names">${names}</div>
-      <div style="width:160px;height:200px;border:1px solid #b8945f;border-radius:4px;overflow:hidden;margin:20px auto;">${phFallback}</div>
-      <div class="iv-div"></div>
-      <div class="iv-date">${dateStr||''}${timeStr?' '+timeStr:''}</div>
+    let bkDate=dateStr||'';
+    if(weddingDateRaw){const _d=new Date(weddingDateRaw+'T00:00:00');if(!isNaN(_d.getTime())){bkDate=`${_d.getFullYear()} · ${String(_d.getMonth()+1).padStart(2,'0')} · ${String(_d.getDate()).padStart(2,'0')}`;}}
+    return`<div class="iv-cover t-black">
+      <div class="bk-stage">
+        <div class="bk-photo-area"><div class="bk-photo">${phFallback}</div><div class="bk-photo-fade"></div></div>
+        <div class="bk-info">
+          ${_coverLabel?`<div class="bk-label">${esc(_coverLabel)}</div>`:''}
+          <div class="bk-names">${_first}<span class="bk-dot">·</span>${_second}</div>
+          <div class="bk-divider"><span class="bk-dash"></span><span class="bk-diamond">&#9826;</span><span class="bk-dash"></span></div>
+          <div class="bk-date">${bkDate}</div>
+          ${timeStr?`<div class="bk-time">${timeStr}</div>`:''}
+        </div>
+      </div>
     </div>`;
   }
   if(tpl==='global'){
