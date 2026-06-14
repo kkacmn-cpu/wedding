@@ -103,15 +103,22 @@ input,select,textarea{font-family:inherit;}
 .tpl-card{border:2px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .3s;background:var(--white);}
 .tpl-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);}
 .tpl-card.on{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-wash);}
-.tpl-prev{height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;overflow:hidden;}
+.tpl-prev{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;overflow:hidden;}
 .tpl-prev .tp-deco{font-size:13px;letter-spacing:3px;opacity:.5;}
 .tpl-prev .tp-name{font-family:var(--serif);font-size:16px;letter-spacing:1px;}
 .tpl-prev .tp-amp{font-family:var(--display);font-style:italic;margin:0 4px;}
 .tpl-prev .tp-date{font-size:10px;letter-spacing:1px;opacity:.6;margin-top:3px;}
 .tpl-prev .tp-frame{position:absolute;inset:10px;border:1px solid currentColor;opacity:.2;border-radius:2px;}
-.tpl-foot{padding:10px 13px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line-soft);}
-.tpl-foot .tf-name{font-size:12.5px;font-weight:400;color:var(--brown);}
-.tpl-foot .tf-badge{font-size:10px;padding:3px 8px;border-radius:999px;background:var(--gold-wash);color:var(--gold-deep);}
+.tpl-foot{padding:11px 13px 12px;display:flex;align-items:flex-start;justify-content:space-between;border-top:1px solid var(--line-soft);}
+.tpl-foot .tf-info{width:100%;}
+.tf-name-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.tpl-foot .tf-name{font-size:13.5px;font-weight:500;color:var(--brown);}
+.tpl-foot .tf-desc{font-size:10.5px;color:var(--brown-mute);margin-top:3px;line-height:1.4;word-break:keep-all;}
+.tpl-foot .tf-photo{font-size:10.5px;color:var(--gold-deep,#9a7740);margin-top:6px;background:var(--gold-wash,rgba(184,148,95,.1));padding:3px 8px;border-radius:6px;display:inline-block;word-break:keep-all;}
+.tf-badge{font-size:9px;padding:2px 7px;border-radius:999px;font-weight:600;letter-spacing:.3px;flex:none;}
+.tf-badge.tf-basic{background:rgba(120,110,95,.12);color:#8a7a68;}
+.tf-badge.tf-premium{background:linear-gradient(135deg,#b89559,#9a7740);color:#fff;}
+.tf-premium-corner{position:absolute;top:8px;right:8px;font-size:8px;font-weight:600;letter-spacing:1px;padding:3px 7px;border-radius:999px;background:rgba(20,16,12,.55);color:#e8d4a8;backdrop-filter:blur(4px);z-index:3;}
 .tpl-card.on .tf-check{background:var(--gold);color:#fff;border-color:var(--gold);}
 /* 12종 템플릿 색상 */
 .t-ivory{background:linear-gradient(155deg,#fcfaf6,#f0e6d5);color:#4a3f33;}
@@ -289,12 +296,16 @@ input,select,textarea{font-family:inherit;}
 .t-signature .sig-photo{position:absolute;inset:0;width:100%;height:100%;}
 .t-signature .sig-photo img{width:100%;height:100%;object-fit:cover;object-position:center 34%;display:block;}
 .t-signature .sig-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,6,4,.28) 0%,transparent 16%,transparent 70%,rgba(8,6,4,.42) 90%,rgba(8,6,4,.7) 100%);}
-.t-signature .sig-top{position:absolute;top:24px;left:0;right:0;text-align:center;z-index:2;}
-.t-signature .sig-label{font-family:var(--display);font-size:8.5px;letter-spacing:6px;color:rgba(255,255,255,.72);text-shadow:0 1px 10px rgba(0,0,0,.5);}
-.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 24px 32px;text-align:center;z-index:2;}
-.t-signature .sig-names{font-family:var(--display);font-size:23px;font-weight:300;letter-spacing:5px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 20px rgba(0,0,0,.45);}
+.t-signature .sig-top{position:absolute;top:24px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:10px;z-index:2;}
+.t-signature .sig-label{font-family:var(--display);font-size:8.5px;letter-spacing:6px;color:rgba(255,255,255,.72);text-shadow:0 1px 10px rgba(0,0,0,.5);white-space:nowrap;}
+.t-signature .sig-label-line{width:16px;height:1px;background:rgba(255,255,255,.4);flex:none;}
+.t-signature .sig-overlay{position:absolute;left:0;right:0;bottom:0;padding:0 24px calc(32px + env(safe-area-inset-bottom,0px));text-align:center;z-index:2;}
+.t-signature .sig-textwrap{display:inline-block;padding:12px 22px;position:relative;}
+.t-signature .sig-textwrap::before{content:'';position:absolute;inset:-6px -16px;background:radial-gradient(ellipse 75% 100% at 50% 60%,rgba(6,4,3,.5),transparent 75%);z-index:-1;filter:blur(2px);}
+.t-signature .sig-names{font-family:var(--display);font-size:23px;font-weight:300;letter-spacing:5px;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 2px 20px rgba(0,0,0,.5);}
 .t-signature .sig-names .sig-dot{display:inline-block;margin:0 10px;font-size:15px;vertical-align:middle;opacity:.65;}
-.t-signature .sig-date{font-family:var(--display);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.75);margin-top:11px;white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.45);}
+.t-signature .sig-hairline{width:26px;height:1px;background:linear-gradient(to right,transparent,rgba(212,184,130,.85),transparent);margin:11px auto;}
+.t-signature .sig-date{font-family:var(--display);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.8);white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.5);}
 @keyframes sigScroll{0%{transform:translateY(-10px);opacity:0;}40%{opacity:1;}100%{transform:translateY(28px);opacity:0;}}
 .t-signature .iv-sec{border-top:1px solid rgba(184,148,95,.14);}
 .t-signature .iv-sec-t{color:#9a7740;}
@@ -307,7 +318,10 @@ input,select,textarea{font-family:inherit;}
 .t-classic-ivory .civ-photo-area{position:relative;flex:0 0 72%;overflow:hidden;background:#e8dcc6;}
 .t-classic-ivory .civ-photo{position:absolute;inset:0;width:100%;height:100%;}
 .t-classic-ivory .civ-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
-.t-classic-ivory .civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 22px;}
+.t-classic-ivory .civ-photo-fade{position:absolute;left:0;right:0;bottom:0;height:18%;background:linear-gradient(to bottom,transparent,rgba(253,252,248,.5) 60%,#fdfcf8);pointer-events:none;}
+.t-classic-ivory .civ-info{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);padding:0 22px calc(0px + env(safe-area-inset-bottom,0px));position:relative;}
+.t-classic-ivory .civ-info::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 38%,rgba(255,255,255,.5),transparent 70%);pointer-events:none;}
+.t-classic-ivory .civ-info>*{position:relative;}
 .t-classic-ivory .civ-label{font-family:var(--display);font-size:9px;letter-spacing:7px;color:#b6995f;text-transform:uppercase;}
 .t-classic-ivory .civ-names{font-family:'Noto Serif KR',serif;font-size:23px;font-weight:500;letter-spacing:4px;color:#2a2018;line-height:1;white-space:nowrap;}
 .t-classic-ivory .civ-names .civ-dot{font-family:var(--display);font-style:italic;color:#b08c4b;font-weight:400;font-size:18px;margin:0 9px;}
@@ -540,9 +554,8 @@ input,select,textarea{font-family:inherit;}
   .sec-desc{font-size:13.5px;line-height:1.7;margin-bottom:20px;word-break:keep-all;}
 
   /* ── 템플릿 카드: 크고 시원하게 (1열 와이드) ── */
-  .tpl-grid{grid-template-columns:1fr;gap:14px;margin-bottom:24px;}
+  .tpl-grid{grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
   .tpl-card{border-radius:18px;}
-  .tpl-prev{height:172px;}
   .tpl-name{font-size:15px;}
   .tpl-pick{font-size:12px;padding:6px 14px;}
 
@@ -599,7 +612,6 @@ input,select,textarea{font-family:inherit;}
 /* 초소형 (≤390px) */
 @media(max-width:390px){
   .work{padding:20px 14px calc(72px + env(safe-area-inset-bottom,0px));}
-  .tpl-prev{height:158px;}
   .cover-picker{grid-template-columns:1fr;}
   .fc-sample{font-size:22px;}
 }
@@ -607,7 +619,6 @@ input,select,textarea{font-family:inherit;}
 /* 극소형 (≤360px) */
 @media(max-width:360px){
   .sec-title{font-size:21px;}
-  .tpl-prev{height:148px;}
   .layout-picker{gap:6px;}
 }
 </style>
@@ -947,27 +958,38 @@ function safeUrl(url){
 
 /* ===== 12종 프리미엄 템플릿 ===== */
 const THEMES=[
-  /* ── 대표 6종: 사진 기반 감성 콘셉트 (맨 앞) ── */
-  {id:'signature',   name:'첫 장면',        cat:'photo',   badge:'대표', desc:'영화 같은 첫 장면'},
-  {id:'black',       name:'자정의 데뷔',     cat:'premium', badge:'프리미엄', desc:'시사회 포스터처럼'},
-  {id:'classic-ivory',name:'여백, 그리고 너',cat:'classic', badge:'',    desc:'갤러리의 한 컷'},
-  {id:'minimal',     name:'스틸컷',          cat:'minimal', badge:'',    desc:'화보 같은 절반 사진'},
-  {id:'flower',      name:'숨, 한 장면',     cat:'flower',  badge:'',    desc:'빛이 스미는 사진'},
-  {id:'hanok',       name:'두 사람의 필름',  cat:'photo',   badge:'NEW', desc:'필름 한 컷처럼'},
-  /* ── 기존 템플릿 (아래 유지, 호환용) ── */
-  {id:'film',        name:'Film Moment',      cat:'photo',   badge:'',      desc:'필름 감성'},
-  {id:'fullscreen',  name:'Full Screen',      cat:'photo',   badge:'',      desc:'풀스크린'},
-  {id:'magazine',    name:'Magazine Cover',   cat:'photo',   badge:'',      desc:'잡지형'},
-  {id:'gold-serif',  name:'Gold Serif',       cat:'classic', badge:'',      desc:'클래식'},
-  {id:'calendar',    name:'Calendar Day',     cat:'minimal', badge:'',      desc:'날짜 강조'},
-  {id:'global',      name:'Global Couple',    cat:'global',  badge:'',      desc:'다국어'},
+  /* ── 메인 노출 6종 (show:true). tier: basic=기본, premium=사진보정 고객 전용(예정) ── */
+  {id:'signature',    name:'첫 장면',        show:true, tier:'premium', desc:'영화 같은 풀스크린 첫 장면', photo:'세로 웨딩화보 추천'},
+  {id:'classic-ivory',name:'여백, 그리고 너',show:true, tier:'basic',   desc:'사진+여백의 안정적인 구성', photo:'모든 사진에 안정적'},
+  {id:'black',        name:'자정의 데뷔',    show:true, tier:'premium', desc:'딥 차콜 호텔 초대장 무드', photo:'야간·호텔·블랙톤 사진 추천'},
+  {id:'minimal',      name:'스틸컷',         show:true, tier:'premium', desc:'화보 같은 절반 사진 구성', photo:'화보·잡지 느낌 사진 추천'},
+  {id:'hanok',        name:'두 사람의 필름', show:true, tier:'basic',   desc:'필름 한 컷처럼 담는 구성', photo:'자연스러운 스냅 추천'},
+  {id:'flower',       name:'숨, 한 장면',    show:true, tier:'basic',   desc:'빛이 스미는 미니멀 구성', photo:'밝고 미니멀한 사진 추천'},
+  /* ── 숨김(show:false). 코드/렌더는 유지 → 기존 발행 카드 호환 ── */
+  {id:'film',        name:'Film Moment',    show:false, tier:'basic', desc:'필름 감성', photo:''},
+  {id:'fullscreen',  name:'Full Screen',    show:false, tier:'basic', desc:'풀스크린', photo:''},
+  {id:'magazine',    name:'Magazine Cover', show:false, tier:'basic', desc:'잡지형', photo:''},
+  {id:'gold-serif',  name:'Gold Serif',     show:false, tier:'basic', desc:'클래식', photo:''},
+  {id:'calendar',    name:'Calendar Day',   show:false, tier:'basic', desc:'날짜 강조', photo:''},
+  {id:'global',      name:'Global Couple',  show:false, tier:'basic', desc:'다국어', photo:''},
 ];
-const CATS=[
-  {id:'all',label:'전체'},{id:'photo',label:'포토형'},
-  {id:'classic',label:'클래식'},{id:'minimal',label:'미니멀'},
-  {id:'hanok',label:'전통'},{id:'flower',label:'플라워'},
-  {id:'premium',label:'프리미엄'},{id:'global',label:'다국어'},
-];
+/* ⚠️ 샘플 웨딩사진 — 템플릿 '선택 카드'에서만 사용. LIVE PREVIEW/발행 카드는 절대 사용 안 함(고객 사진만) */
+const SAMPLE_BASE='https://kkacmn-cpu.github.io/wedding/samples/';
+const TPL_SAMPLE={
+  'signature':'tpl-signature.webp',
+  'classic-ivory':'tpl-classic-ivory.webp',
+  'black':'tpl-black.webp',
+  'minimal':'tpl-minimal.webp',
+  'hanok':'tpl-hanok.webp',
+  'flower':'tpl-flower.webp',
+};
+/* 샘플 이미지 배경 (없으면 onerror로 숨겨 그라데이션 fallback 노출) */
+function sampleBg(id){
+  const f=TPL_SAMPLE[id];
+  if(!f)return '';
+  const url=SAMPLE_BASE+f;
+  return `<img src="${url}" alt="" loading="lazy" onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;"/>`;
+}
 /* 템플릿별 미리보기 색상 */
 const THEME_STYLES={
   'signature':    {bg:'linear-gradient(155deg,#fcfaf6,#f0e6d5)',color:'#4a3f33',deco:'◇  ◇  ◇'},
@@ -986,24 +1008,22 @@ const THEME_STYLES={
 let _curCat='all';
 
 function renderTemplates(){
-  /* 카테고리 필터 탭 */
-  const catHtml=`<div class="cat-filter" id="catFilter" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;">
-    ${CATS.map(c=>`<button class="cat-btn ${c.id===_curCat?'on':''}" onclick="filterCat('${c.id}')">${c.label}</button>`).join('')}
-  </div>`;
+  /* 메인 노출은 show:true 6종만. 숨김 템플릿도 ST.theme이면 표시(기존 카드 호환) */
+  const filtered=THEMES.filter(t=>t.show||t.id===ST.theme);
 
-  const filtered=_curCat==='all'?THEMES:THEMES.filter(t=>t.cat===_curCat);
-
-  V('tplGrid').innerHTML=catHtml+filtered.map(t=>{
+  V('tplGrid').innerHTML=filtered.map(t=>{
     const s=THEME_STYLES[t.id]||{bg:'#fff',color:'#333',deco:'◇'};
     const isOn=t.id===ST.theme;
     /* 미니멀 타입별 미리보기 레이아웃 */
     let previewInner='';
     if(t.id==='signature'){
       previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(160deg,#c9bcae,#8a7a64 75%,#6d5d48);overflow:hidden;">
-        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(8,6,4,.55) 88%,rgba(8,6,4,.82));"></div>
-        <div style="position:absolute;bottom:11px;left:0;right:0;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:2px;color:#fff;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.5);">민준<span style="margin:0 5px;opacity:.7;">·</span>서연</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:5.5px;letter-spacing:2px;color:rgba(255,255,255,.8);margin-top:4px;">2026 · 07 · 13</div>
+        ${sampleBg('signature')}
+        <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,transparent 55%,rgba(8,6,4,.5) 86%,rgba(8,6,4,.8));"></div>
+        <div style="position:absolute;bottom:14px;left:0;right:0;z-index:1;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;letter-spacing:2px;color:#fff;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.5);">민준<span style="margin:0 5px;opacity:.7;">·</span>서연</div>
+          <div style="width:18px;height:1px;background:linear-gradient(to right,transparent,rgba(212,184,130,.9),transparent);margin:6px auto;"></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.8);">2026 · 07 · 13</div>
         </div>
       </div>`;
     }else if(t.id==='film'){
@@ -1031,27 +1051,30 @@ function renderTemplates(){
       previewInner=`<div style="position:relative;width:100%;height:100%;background:#15130f;display:flex;align-items:center;justify-content:center;">
         <div style="position:absolute;top:0;bottom:0;left:4px;width:6px;background:repeating-linear-gradient(to bottom,#0a0908 0,#0a0908 4px,#2a2620 4px,#2a2620 8px);"></div>
         <div style="position:absolute;top:0;bottom:0;right:4px;width:6px;background:repeating-linear-gradient(to bottom,#0a0908 0,#0a0908 4px,#2a2620 4px,#2a2620 8px);"></div>
-        <div style="width:62%;height:78%;background:linear-gradient(155deg,#b8a890,#7d6d56);position:relative;box-shadow:0 4px 16px rgba(0,0,0,.5);">
-          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.6));"></div>
-          <div style="position:absolute;bottom:7px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-size:11px;color:#fff;letter-spacing:1px;">민준 &amp; 서연</div>
-          <div style="position:absolute;top:6px;left:6px;font-family:'Courier New',monospace;font-size:5px;color:rgba(255,255,255,.7);">FRAME 02</div>
+        <div style="width:62%;height:78%;background:linear-gradient(155deg,#b8a890,#7d6d56);position:relative;box-shadow:0 4px 16px rgba(0,0,0,.5);overflow:hidden;">
+          ${sampleBg('hanok')}
+          <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.6));"></div>
+          <div style="position:absolute;bottom:7px;left:0;right:0;z-index:1;text-align:center;font-family:'Cormorant Garamond',serif;font-size:11px;color:#fff;letter-spacing:1px;">민준 &amp; 서연</div>
+          <div style="position:absolute;top:6px;left:6px;z-index:1;font-family:'Courier New',monospace;font-size:5px;color:rgba(255,255,255,.7);">FRAME 02</div>
         </div>
       </div>`;
     }else if(t.id==='flower'){
-      previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(155deg,#c9bcae,#9a8a76);">
-        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(255,250,245,.55),transparent 55%);"></div>
-        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,245,238,.25),transparent 40%,rgba(60,45,40,.45));"></div>
-        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+      previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(155deg,#c9bcae,#9a8a76);overflow:hidden;">
+        ${sampleBg('flower')}
+        <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 50% 30%,rgba(255,250,245,.5),transparent 55%);"></div>
+        <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(255,245,238,.22),transparent 40%,rgba(60,45,40,.5));"></div>
+        <div style="position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
           <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.95);text-shadow:0 1px 6px rgba(0,0,0,.3);">our quiet breath</div>
           <div style="font-family:'Noto Serif KR',serif;font-size:15px;font-weight:300;letter-spacing:2px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4);">민준 &amp; 서연</div>
         </div>
       </div>`;
     }else if(t.id==='black'){
-      previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(155deg,#1d1a16,#0a0908);">
-        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(212,196,160,.16),transparent 60%);"></div>
-        <div style="position:absolute;inset:8px;border:1px solid rgba(196,168,110,.55);"></div>
-        <div style="position:absolute;inset:11px;border:1px solid rgba(196,168,110,.25);"></div>
-        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+      previewInner=`<div style="position:relative;width:100%;height:100%;background:linear-gradient(155deg,#1d1a16,#0a0908);overflow:hidden;">
+        ${sampleBg('black')}
+        <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,8,6,.5),rgba(10,8,6,.72));"></div>
+        <div style="position:absolute;inset:8px;z-index:2;border:1px solid rgba(196,168,110,.55);"></div>
+        <div style="position:absolute;inset:11px;z-index:2;border:1px solid rgba(196,168,110,.25);"></div>
+        <div style="position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
           <div style="font-family:'Cormorant Garamond',serif;font-size:7px;letter-spacing:4px;color:#c4a86e;">INVITATION</div>
           <div style="font-size:8px;color:#c4a86e;">✦</div>
           <div style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:500;letter-spacing:2px;color:#e8dcc0;text-align:center;line-height:1.3;text-shadow:0 1px 6px rgba(0,0,0,.6);">민준<span style="font-family:'Cormorant Garamond',serif;font-style:italic;margin:0 3px;color:#c4a86e;">&amp;</span>서연</div>
@@ -1091,16 +1114,19 @@ function renderTemplates(){
       </div>`;
     }else if(t.id==='classic-ivory'){
       previewInner=`<div style="position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:#f6efe0;">
-        <div style="flex:0 0 70%;background:linear-gradient(155deg,#d8ccba,#a8967c);"></div>
+        <div style="flex:0 0 70%;position:relative;background:linear-gradient(155deg,#d8ccba,#a8967c);overflow:hidden;">
+          ${sampleBg('classic-ivory')}
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:1;height:22%;background:linear-gradient(to bottom,transparent,#fdfcf8);"></div>
+        </div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:linear-gradient(170deg,#fdfcf8,#f3ead8);">
           <div style="font-family:'Cormorant Garamond',serif;font-size:5px;letter-spacing:2px;color:#b39a6a;">THE WEDDING OF</div>
-          <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:400;letter-spacing:1px;color:#2c2218;white-space:nowrap;">민준<span style="font-family:'Cormorant Garamond',serif;color:#bfa063;font-style:italic;margin:0 4px;">&amp;</span>서연</div>
+          <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:500;letter-spacing:1px;color:#2a2018;white-space:nowrap;">민준<span style="font-family:'Cormorant Garamond',serif;color:#b08c4b;font-style:italic;margin:0 4px;">&amp;</span>서연</div>
           <div style="font-family:'Cormorant Garamond',serif;font-size:6px;letter-spacing:1px;color:#8a7560;white-space:nowrap;">2026 · 07 · 13</div>
         </div>
       </div>`;
     }else if(t.id==='minimal'){
       previewInner=`<div style="width:100%;height:100%;display:flex;flex-direction:column;background:#fff;">
-        <div style="height:52%;background:linear-gradient(155deg,#cfc6ba,#9a8c78);"></div>
+        <div style="height:52%;position:relative;background:linear-gradient(155deg,#cfc6ba,#9a8c78);overflow:hidden;">${sampleBg('minimal')}</div>
         <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 11px;">
           <div style="font-size:6px;letter-spacing:3px;color:#bbb;margin-bottom:4px;">WE'RE GETTING MARRIED</div>
           <div style="font-family:'Helvetica Neue',sans-serif;font-size:15px;font-weight:600;line-height:1.15;color:#1a1a1a;letter-spacing:-.3px;">민준<br>서연</div>
@@ -1133,23 +1159,30 @@ function renderTemplates(){
       </div>`;
     }
 
+    const tierBadge = t.tier==='premium'
+      ? `<span class="tf-badge tf-premium">PREMIUM</span>`
+      : `<span class="tf-badge tf-basic">기본</span>`;
     return`<div class="tpl-card ${isOn?'on':''}" onclick="pickTheme('${t.id}')">
       <div class="tpl-prev" style="background:${s.bg};position:relative;overflow:hidden;">
         ${previewInner}
+        ${t.tier==='premium'?`<span class="tf-premium-corner">PREMIUM</span>`:''}
       </div>
       <div class="tpl-foot">
-        <div>
-          <div class="tf-name">${t.name}</div>
-          <div style="font-size:10px;color:var(--brown-mute);margin-top:1px;">${t.desc}</div>
+        <div class="tf-info">
+          <div class="tf-name-row">
+            <span class="tf-name">${t.name}</span>
+            ${tierBadge}
+          </div>
+          <div class="tf-desc">${t.desc}</div>
+          ${t.photo?`<div class="tf-photo">📷 ${t.photo}</div>`:''}
         </div>
-        ${t.badge?`<span class="tf-badge">${t.badge}</span>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
 function filterCat(cat){
-  _curCat=cat;
+  /* 카테고리 필터는 폐지됨 — 호환용으로 renderTemplates만 호출 */
   renderTemplates();
 }
 /* 상단 문구(cover_label) 처리 */
@@ -1545,10 +1578,13 @@ function renderIV(playOp){
       <div class="sig-hero">
         <div class="sig-photo">${ph}</div>
         <div class="sig-scrim"></div>
-        ${_lbl?`<div class="sig-top"><span class="sig-label">${esc(_lbl)}</span></div>`:''}
+        ${_lbl?`<div class="sig-top"><span class="sig-label-line"></span><span class="sig-label">${esc(_lbl)}</span><span class="sig-label-line"></span></div>`:''}
         <div class="sig-overlay">
-          <div class="sig-names">${_ef}<span class="sig-dot">·</span>${_es}</div>
-          <div class="sig-date">${sigDate}</div>
+          <div class="sig-textwrap">
+            <div class="sig-names">${_ef}<span class="sig-dot">·</span>${_es}</div>
+            <div class="sig-hairline"></div>
+            <div class="sig-date">${sigDate}</div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -1622,7 +1658,7 @@ function renderIV(playOp){
     const _civLbl=getCoverLabel();
     html+=`<div class="iv-cover t-classic-ivory">
       <div class="civ-stage">
-        <div class="civ-photo-area"><div class="civ-photo">${ph}</div></div>
+        <div class="civ-photo-area"><div class="civ-photo">${ph}</div><div class="civ-photo-fade"></div></div>
         <div class="civ-info">
           ${_civLbl?`<div class="civ-label">${esc(_civLbl)}</div>`:''}
           <div class="civ-names">${_ef}<span class="civ-dot">&amp;</span>${_es}</div>
